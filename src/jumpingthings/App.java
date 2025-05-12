@@ -4,6 +4,7 @@ import javax.swing.*;
 
 public class App {
     private final static int TIMER_MS = 1000;
+    private final static int MAXIMUM_MATCH_DURATION = 10;
 
     public static void main(String[] args) {
         final var match = new Match(4);
@@ -16,13 +17,12 @@ public class App {
 
         final Timer[] timer = new Timer[1]; // to allow stopping inside lambda
         final int[] counter = {0};
-        final int maxIterations = 5;
 
         timer[0] = new Timer(TIMER_MS, e -> {
             match.iterate();
             panel.repaint();
             counter[0]++;
-            if (counter[0] >= maxIterations) {
+            if (counter[0] >= MAXIMUM_MATCH_DURATION) {
                 timer[0].stop();
             }
         });

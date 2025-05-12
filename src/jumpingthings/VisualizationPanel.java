@@ -2,8 +2,10 @@ package com.lucassf2k.main.jumpingthings;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Locale;
 import java.util.Objects;
 
 public class VisualizationPanel extends JPanel {
@@ -15,8 +17,8 @@ public class VisualizationPanel extends JPanel {
     }
 
     @Override
-    protected void paintComponent(final Graphics g) {
-        super.paintComponent(g);
+    protected void paintComponent(final Graphics graphics) {
+        super.paintComponent(graphics);
 
         int panelWidth = getWidth();
         int panelHeight = getHeight();
@@ -24,8 +26,8 @@ public class VisualizationPanel extends JPanel {
 
         // Horizontal line in the middle
         int lineY = panelHeight / 2;
-        g.setColor(Color.GRAY);
-        g.drawLine(margin, lineY, panelWidth - margin, lineY);
+        graphics.setColor(Color.GRAY);
+        graphics.drawLine(margin, lineY, panelWidth - margin, lineY);
 
         long currentTime = System.currentTimeMillis(); // current time to animate jump
 
@@ -38,16 +40,14 @@ public class VisualizationPanel extends JPanel {
 
             // Vertical oscillation in jump form (sine of time)
             double frequency = 0.005; // smaller = slower
-            int jumpAmplitude = 10; // max jump height
-            int yOffset = (int)(Math.sin(currentTime * frequency + creature.getId()) * jumpAmplitude);
-
+            int jumpAmplitude = 20; // max jump height
+            //int yOffset = (int)(Math.sin(currentTime * frequency + creature.getId()) * jumpAmplitude);
+            int yOffset = (int)(Math.abs(Math.sin(currentTime * frequency + creature.getId())) * jumpAmplitude);
             int y = lineY - 5 - yOffset; // apply jump
-
-            g.setColor(Color.BLUE);
-            g.fillOval(x, y, 10, 10);
-
-            g.setColor(Color.BLACK);
-            g.drawString("ID: " + creature.getId() + " Gold: " + creature.getCoins(), x + 15, y + 10);
+            graphics.setColor(Color.BLUE);
+            graphics.fillOval(x, y, 10, 10);
+            graphics.setColor(Color.BLACK);
+            graphics.drawString("ID: " + creature.getId(), x + 15, y + 10);
         }
 
         // Draw top-right panel showing creature coins
@@ -57,13 +57,13 @@ public class VisualizationPanel extends JPanel {
         final var infoBoxX = panelWidth - infoBoxWidth - padding;
         final var infoBoxHeight = creatures.size() * lineHeight + 2 * padding;
 // Background rectangle
-        g.setColor(new Color(240, 240, 240, 220)); // light gray with slight transparency
-        g.fillRect(infoBoxX, padding, infoBoxWidth, infoBoxHeight);
+        graphics.setColor(new Color(240, 240, 240, 220)); // light gray with slight transparency
+        graphics.fillRect(infoBoxX, padding, infoBoxWidth, infoBoxHeight);
 // Border
-        g.setColor(Color.DARK_GRAY);
-        g.drawRect(infoBoxX, padding, infoBoxWidth, infoBoxHeight);
+        graphics.setColor(Color.DARK_GRAY);
+        graphics.drawRect(infoBoxX, padding, infoBoxWidth, infoBoxHeight);
 // Text
-        g.setColor(Color.BLACK);
+        graphics.setColor(Color.BLACK);
         final var textX = infoBoxX + padding;
         var textY = padding + padding + lineHeight;
 // Sort creatures by coins descending
@@ -71,8 +71,14 @@ public class VisualizationPanel extends JPanel {
         sortedCreatures.sort(Comparator.comparingInt(Creature::getCoins).reversed());
 
         for (final var creature : sortedCreatures) {
-            g.drawString("ID " + creature.getId() + ": " + creature.getCoins() + " coins", textX, textY);
+            graphics.drawString("ID " + creature.getId() + ": " + formatterCoins(creature.getCoins()) + " coins", textX, textY);
             textY += lineHeight;
         }
+    }
+
+    private String formatterCoins(final int coins) {
+        NumberFormat brCurrency = NumberFormat.getNumberInstance(Locale.of("pt", "BR"));
+        brCurrency.setMaximumFractionDigits(0);
+        return brCurrency.format(coins);
     }
 }
