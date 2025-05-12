@@ -1,4 +1,4 @@
-package jumpingthings;
+    package com.lucassf2k.main.jumpingthings;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -39,12 +39,12 @@ public class Creature {
         return halfCoins;
     }
 
-    public void atualizarPosicao() {
+    public void updatePosition() {
 //        double r = -1 + 2 * Math.random(); // r ∈ [-1, 1]
 //        this.X += (float) (r * this.coins);double r = -1 + 2 * Math.random(); // r ∈ [-1, 1]
         double r = -1 + 2 * Math.random(); // r ∈ [-1, 1]
         this.X += (float) (r * this.coins / 1_000_000); // escala coins para até 1.0
-        this.X = Math.max(-1f, Math.min(1f, this.X)); // mantém X em [-1, 1]
+        setX(Math.max(-1f, Math.min(1f, this.X))); // mantém X em [-1, 1]
     }
 
     private void loseCoins(final int value) {
