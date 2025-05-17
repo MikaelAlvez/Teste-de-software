@@ -1,4 +1,4 @@
-    package com.lucassf2k.main.jumpingthings;
+    package jumpingthings;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
