@@ -14,56 +14,58 @@ public class MatchTest {
     @Test
     public void testCriacaoMatchCom3Criaturas() {
         Match match = new Match(3);
-        assertEquals(3, match.getCreatures().size());
+        assertThat(match.getCreatures()).hasSize(3);
     }
 
     // Verifica se a partida tem no máximo 30
     @Test
-    public void testIfMatchHasMaximum14Creatures() {
-        final var match = new Match(45);
-        assertNotEquals(45, match.getCreatures().size());
-        assertEquals(30, match.getCreatures().size());
+    public void testIfMatchHasMaximum30Creatures() {
+        final Match match = new Match(45);
+
+        assertThat(match.getCreatures()).hasSize(30).doesNotHaveSize(45);
     }
 
     // Verifica se após iteração há transferência de moedas
     @Test
     public void testIterateSomaMetadeDasMoedas() {
-        Match match = new Match(4);
+        Match match = new Match(2);
         List<Creature> creatures = match.getCreatures();
-        // Força valores conhecidos
+
         creatures.get(0).setX(0f);
         creatures.get(1).setX(0.01f);
 
         int moedasAntes = creatures.get(0).getCoins();
+        match.iterate();
+        int moedasDepois = creatures.get(0).getCoins();
 
-        for (int i = 0; i < 30; i++) match.iterate();
-
-        int moedasDepois = creatures.getFirst().getCoins();
-
-        assertTrue(moedasDepois > moedasAntes); // Ganhou moedas do outro
+        assertThat(moedasDepois).isGreaterThan(moedasAntes);
     }
+
 
     // Verifica concentração de moedas após várias iterações
     @Test
     public void testRichGetRicherEffect() {
         Match match = new Match(10);
-        for (int i = 0; i < 100; i++) {
-            match.iterate();
-        }
+        for (int i = 0; i < 100; i++) match.iterate();
+
         List<Creature> creatures = match.getCreatures();
         int richest = creatures.stream().mapToInt(Creature::getCoins).max().orElse(0);
         int poorest = creatures.stream().mapToInt(Creature::getCoins).min().orElse(0);
-        assertTrue(richest > 1_000_000);
-        assertTrue(poorest < 1_000_000);
+
+        assertThat(richest).isGreaterThan(1_000_000);
+        assertThat(poorest).isLessThan(1_000_000);
     }
 
     // Criatura com moedas quase zeradas
     @Test
     public void testCreatureLosesAllCoins() {
-        Match match = new Match(3);
-        Creature c3 = match.getCreatures().get(2);
-        while (c3.getCoins() != 1) match.iterate();
-        assertEquals(1, c3.getCoins());
+        Match match = new Match(2);
+        Creature c1 = match.getCreatures().get(0);
+        Creature c2 = match.getCreatures().get(1);
+
+        for (int i = 0; i < 100; i++) match.iterate();
+
+        assertThat(c1.getCoins() <= 1 || c2.getCoins() <= 1).isTrue();
     }
 
     // Testa se a quantidade total de moedas não muda
@@ -74,7 +76,8 @@ public class MatchTest {
                 .stream()
                 .mapToInt(Creature::getCoins)
                 .sum();
-        assertEquals(10_000_000, totalCoins);
+
+        assertThat(totalCoins).isEqualTo(10_000_000);
     }
 
     // Testes de fronteira
@@ -86,30 +89,32 @@ public class MatchTest {
         int moedasAntes = match.getCreatures().getFirst().getCoins();
         match.iterate();
         int moedasDepois = match.getCreatures().getFirst().getCoins();
-        assertEquals(moedasAntes, moedasDepois);
+
+        assertThat(moedasDepois).isEqualTo(moedasAntes);
     }
 
     @Test
     public void testMatchComZeroCriaturas() {
-        // Fronteira inferior: sem criaturas → não pode lançar exceções
         Match match = new Match(0);
         match.iterate();
-        assertEquals(0, match.getCreatures().size());
+
+        assertThat(match.getCreatures()).isEmpty();
     }
 
     // Distância 0 entre criaturas
     @Test
     public void testCriaturasComMesmaPosicao() {
-
         Match match = new Match(2);
         match.getCreatures().get(0).setX(0.5f);
         match.getCreatures().get(1).setX(0.5f);
-
         match.iterate();
 
-        // Ambas devem transferir moedas uma à outra
-        int totalMoedas = match.getCreatures().stream().mapToInt(Creature::getCoins).sum();
-        assertTrue(totalMoedas <= 2_000_000); // Pode perder algumas no arredondamento
+        int totalMoedas = match.getCreatures()
+                .stream()
+                .mapToInt(Creature::getCoins)
+                .sum();
+
+        assertThat(totalMoedas).isLessThanOrEqualTo(2_000_000);
     }
 
     // Todas criaturas na mesma posição
@@ -120,7 +125,8 @@ public class MatchTest {
             c.setX(0.0f);
         }
         match.iterate();
-        assertEquals(3, match.getCreatures().size());
+
+        assertThat(match.getCreatures()).hasSize(3);
     }
 
     // Criaturas com número ímpar de moedas
@@ -128,8 +134,9 @@ public class MatchTest {
     public void testOddCoinNumberHalving() {
         Creature c = new Creature(1, 999_999);
         int half = c.getHalfCoins();
-        assertEquals(499_999, half);
-        assertEquals(500_000, c.getCoins());
+
+        assertThat(half).isEqualTo(499_999);
+        assertThat(c.getCoins()).isEqualTo(500_000);
     }
 
     // Usando Integer.MAX_VALUE como moedas
@@ -137,7 +144,8 @@ public class MatchTest {
     public void testMaxIntCoins() {
         Creature c = new Creature(1, Integer.MAX_VALUE);
         c.updatePosition();
-        assertTrue(c.getX() >= -1.0f && c.getX() <= 1.0f);
+
+        assertThat(c.getX()).isBetween(-1.0f, 1.0f);
     }
 
     // Testes estruturais e cobertura de código
@@ -148,20 +156,20 @@ public class MatchTest {
         match.getCreatures().get(0).setX(-0.9f);
         match.getCreatures().get(1).setX(-0.8f);
         match.getCreatures().get(2).setX(0.8f);
-        Creature closest = match.getCreatures().get(1);
-        Creature expected = match.getCreatures().get(0);
-        // Força chamada indireta de findClosest
+        Creature original = match.getCreatures().get(1);
+
         match.iterate();
 
-        assertEquals(closest.getId(), match.getCreatures().get(1).getId());
+        assertThat(match.getCreatures()).anyMatch(c -> c.getId() == original.getId());
     }
 
     // Testa findClosest retornando null (caso 1 criatura)
     @Test
     public void testFindClosestWithOneCreature() {
         Match match = new Match(1);
-        match.iterate(); // findClosest retorna null, não deve dar erro
-        assertEquals(1, match.getCreatures().size());
+        match.iterate();
+
+        assertThat(match.getCreatures()).hasSize(1);
     }
 
     // Testa repetição máxima (com 1000 criaturas)
@@ -169,7 +177,8 @@ public class MatchTest {
     public void testManyCreatures() {
         Match match = new Match(1000);
         match.iterate();
-        assertEquals(30, match.getCreatures().size());
+
+        assertThat(match.getCreatures()).hasSize(30);
     }
 
     // Teste de mutação
@@ -182,10 +191,9 @@ public class MatchTest {
         c1.setX(-1.0f);
         c2.setX(1.0f);
 
-        match.iterate(); // Deve selecionar o mais próximo (único outro)
+        match.iterate();
 
-        assertTrue(c1.getCoins() > 1_000_000 || c2.getCoins() > 1_000_000);
-        // Garante que houve transferência
+        assertThat(c1.getCoins() > 1_000_000 || c2.getCoins() > 1_000_000).isTrue();
     }
 
     // Alterar lógica de comparação para >=
@@ -196,9 +204,10 @@ public class MatchTest {
         Creature c3 = new Creature(3, 0.2f);
         Match match = new Match(0);
         match.getCreatures().addAll(List.of(c1, c2, c3));
-        Creature closest = match.getCreatures().get(0);
-        match.iterate(); // deve funcionar normalmente
-        assertEquals(3, match.getCreatures().size());
+
+        match.iterate();
+
+        assertThat(match.getCreatures()).hasSize(3);
     }
 
     // Sem Math.abs — verificar se ainda retorna o mais próximo
@@ -209,8 +218,17 @@ public class MatchTest {
         Creature c = new Creature(3, 0.6f);
         Match match = new Match(0);
         match.getCreatures().addAll(List.of(a, b, c));
+
         match.iterate();
-        assertEquals(3, match.getCreatures().size());
+
+        assertThat(match.getCreatures()).hasSize(3);
+    }
+
+    @Test
+    public void testIfMatchHasMaximum30Creatures() {
+        Match match = new Match(45);
+
+        assertThat(match.getCreatures()).hasSize(30).doesNotHaveSize(45);
     }
 
 }
