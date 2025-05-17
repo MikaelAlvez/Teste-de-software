@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CreatureTest {
 
     // Testes de domínio
-
+  
     // Valores default
     @Test
     void testCreateCreatureWithDefaultValues() {

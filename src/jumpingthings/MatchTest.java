@@ -3,7 +3,7 @@ package com.lucassf2k.main.jumpingthings;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-
+import java.util.concurrent.ThreadLocalRandom;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchTest {
@@ -17,21 +17,29 @@ public class MatchTest {
         assertEquals(3, match.getCreatures().size());
     }
 
+    // Verifica se a partida tem no máximo 30
+    @Test
+    public void testIfMatchHasMaximum14Creatures() {
+        final var match = new Match(45);
+        assertNotEquals(45, match.getCreatures().size());
+        assertEquals(30, match.getCreatures().size());
+    }
+
     // Verifica se após iteração há transferência de moedas
     @Test
     public void testIterateSomaMetadeDasMoedas() {
-        Match match = new Match(2);
+        Match match = new Match(4);
         List<Creature> creatures = match.getCreatures();
-
         // Força valores conhecidos
         creatures.get(0).setX(0f);
         creatures.get(1).setX(0.01f);
 
         int moedasAntes = creatures.get(0).getCoins();
 
-        match.iterate();
+        for (int i = 0; i < 30; i++) match.iterate();
 
-        int moedasDepois = creatures.get(0).getCoins();
+        int moedasDepois = creatures.getFirst().getCoins();
+
         assertTrue(moedasDepois > moedasAntes); // Ganhou moedas do outro
     }
 
@@ -52,11 +60,21 @@ public class MatchTest {
     // Criatura com moedas quase zeradas
     @Test
     public void testCreatureLosesAllCoins() {
-        Match match = new Match(2);
-        Creature c1 = match.getCreatures().get(0);
-        Creature c2 = match.getCreatures().get(1);
-        for (int i = 0; i < 100; i++) match.iterate();
-        assertTrue(c1.getCoins() <= 1 || c2.getCoins() <= 1);
+        Match match = new Match(3);
+        Creature c3 = match.getCreatures().get(2);
+        while (c3.getCoins() != 1) match.iterate();
+        assertEquals(1, c3.getCoins());
+    }
+
+    // Testa se a quantidade total de moedas não muda
+    @Test
+    public void testEnsuresEndTotalCoinsRemainsSame() {
+        final var match = new Match(10);
+        final var totalCoins = match.getCreatures()
+                .stream()
+                .mapToInt(Creature::getCoins)
+                .sum();
+        assertEquals(10_000_000, totalCoins);
     }
 
     // Testes de fronteira
@@ -64,13 +82,10 @@ public class MatchTest {
     // Só 1 criatura → não deve haver transferência de moedas
     @Test
     public void testMatchComApenasUmaCriatura() {
-
         Match match = new Match(1);
-        int moedasAntes = match.getCreatures().get(0).getCoins();
-
+        int moedasAntes = match.getCreatures().getFirst().getCoins();
         match.iterate();
-
-        int moedasDepois = match.getCreatures().get(0).getCoins();
+        int moedasDepois = match.getCreatures().getFirst().getCoins();
         assertEquals(moedasAntes, moedasDepois);
     }
 
@@ -133,14 +148,12 @@ public class MatchTest {
         match.getCreatures().get(0).setX(-0.9f);
         match.getCreatures().get(1).setX(-0.8f);
         match.getCreatures().get(2).setX(0.8f);
-
-        Creature closest = match.getCreatures().get(0);
-        Creature expected = match.getCreatures().get(1);
-
+        Creature closest = match.getCreatures().get(1);
+        Creature expected = match.getCreatures().get(0);
         // Força chamada indireta de findClosest
         match.iterate();
 
-        assertEquals(expected.getId(), match.getCreatures().get(0).getId());
+        assertEquals(closest.getId(), match.getCreatures().get(1).getId());
     }
 
     // Testa findClosest retornando null (caso 1 criatura)
@@ -156,7 +169,7 @@ public class MatchTest {
     public void testManyCreatures() {
         Match match = new Match(1000);
         match.iterate();
-        assertEquals(1000, match.getCreatures().size());
+        assertEquals(30, match.getCreatures().size());
     }
 
     // Teste de mutação
