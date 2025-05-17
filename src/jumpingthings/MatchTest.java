@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchTest {
@@ -31,7 +30,6 @@ public class MatchTest {
     public void testIterateSomaMetadeDasMoedas() {
         Match match = new Match(4);
         List<Creature> creatures = match.getCreatures();
-
         // Força valores conhecidos
         creatures.get(0).setX(0f);
         creatures.get(1).setX(0.01f);
@@ -41,6 +39,7 @@ public class MatchTest {
         for (int i = 0; i < 30; i++) match.iterate();
 
         int moedasDepois = creatures.getFirst().getCoins();
+
         assertTrue(moedasDepois > moedasAntes); // Ganhou moedas do outro
     }
 
@@ -83,12 +82,9 @@ public class MatchTest {
     // Só 1 criatura → não deve haver transferência de moedas
     @Test
     public void testMatchComApenasUmaCriatura() {
-
         Match match = new Match(1);
         int moedasAntes = match.getCreatures().getFirst().getCoins();
-
         match.iterate();
-
         int moedasDepois = match.getCreatures().getFirst().getCoins();
         assertEquals(moedasAntes, moedasDepois);
     }
@@ -152,10 +148,8 @@ public class MatchTest {
         match.getCreatures().get(0).setX(-0.9f);
         match.getCreatures().get(1).setX(-0.8f);
         match.getCreatures().get(2).setX(0.8f);
-
         Creature closest = match.getCreatures().get(1);
         Creature expected = match.getCreatures().get(0);
-
         // Força chamada indireta de findClosest
         match.iterate();
 

@@ -7,22 +7,23 @@ import static org.junit.jupiter.api.Assertions.*;
 class CreatureTest {
 
     // Testes de domínio
-
+  
+    // Valores default
     @Test
     void testCreateCreatureWithDefaultValues() {
         Creature c = new Creature(1);
-        assertEquals(1, c.getId());
-        assertEquals(1_000_000, c.getCoins());
-        assertEquals(0.0f, c.getX());
+        assertThat(c.getId()).isEqualTo(1);
+        assertThat(c.getCoins()).isEqualTo(1_000_000);
+        assertThat(c.getX()).isEqualTo(0.0f);
     }
 
     // Valores customizados
     @Test
     void testCreateCreatureWithCustomValues() {
         Creature c = new Creature(2, 0.75f, 500_000);
-        assertEquals(2, c.getId());
-        assertEquals(0.75f, c.getX());
-        assertEquals(500_000, c.getCoins());
+        assertThat(c.getId()).isEqualTo(2);
+        assertThat(c.getX()).isEqualTo(0.75f);
+        assertThat(c.getCoins()).isEqualTo(500_000);
     }
 
     // Adicionar moedas
@@ -30,7 +31,7 @@ class CreatureTest {
     void testAddCoins() {
         Creature c = new Creature(7, 500_000);
         c.addCoins(100_000);
-        assertEquals(600_000, c.getCoins());
+        assertThat(c.getCoins()).isEqualTo(600_000);
     }
 
     // Não adiciona moedas negativas
@@ -38,7 +39,7 @@ class CreatureTest {
     void testAddNegativeCoinsDoesNothing() {
         Creature c = new Creature(8, 500_000);
         c.addCoins(-200_000);
-        assertEquals(500_000, c.getCoins());
+        assertThat(c.getCoins()).isEqualTo(500_000);
     }
 
     // GetHalfCoins reduz pela metade
@@ -46,8 +47,8 @@ class CreatureTest {
     void testGetHalfCoinsReducesByHalf() {
         Creature c = new Creature(10, 1_000_000);
         int half = c.getHalfCoins();
-        assertEquals(500_000, half);
-        assertEquals(500_000, c.getCoins());
+        assertThat(half).isEqualTo(500_000);
+        assertThat(c.getCoins()).isEqualTo(500_000);
     }
 
     // Testes de fronteira
@@ -57,7 +58,7 @@ class CreatureTest {
     void testSetXToMinimumBoundary() {
         Creature c = new Creature(3);
         c.setX(-1f);
-        assertEquals(-1f, c.getX());
+        assertThat(c.getX()).isEqualTo(-1f);
     }
 
     // X = 1
@@ -65,7 +66,7 @@ class CreatureTest {
     void testSetXToMaximumBoundary() {
         Creature c = new Creature(4);
         c.setX(1f);
-        assertEquals(1f, c.getX());
+        assertThat(c.getX()).isEqualTo(1f);
     }
 
     // X < -1 (não deve alterar)
@@ -73,7 +74,7 @@ class CreatureTest {
     void testSetXBelowMinimumBoundary() {
         Creature c = new Creature(5);
         c.setX(-1.01f);
-        assertEquals(0.0f, c.getX()); // valor original
+        assertThat(c.getX()).isEqualTo(0.0f);
     }
 
     // X > 1 (não deve alterar)
@@ -81,7 +82,7 @@ class CreatureTest {
     void testSetXAboveMaximumBoundary() {
         Creature c = new Creature(6);
         c.setX(1.01f);
-        assertEquals(0.0f, c.getX()); // valor original
+        assertThat(c.getX()).isEqualTo(0.0f);
     }
 
     // Teste estrutural + domínio
@@ -91,8 +92,7 @@ class CreatureTest {
     void testUpdatePositionWithinBounds() {
         Creature c = new Creature(9, 0f, 1_000_000);
         c.updatePosition();
-        float x = c.getX();
-        assertTrue(x >= -1f && x <= 1f);
+        assertThat(c.getX()).isBetween(-1f, 1f);
     }
 
     // GetHalfCoins com 1 moeda (não deve perder moeda)
@@ -100,8 +100,8 @@ class CreatureTest {
     void testGetHalfCoinsWhenCoinsIsOne() {
         Creature c = new Creature(11, 1);
         int half = c.getHalfCoins();
-        assertEquals(0, half); // metade de 1 é 0 (inteiro)
-        assertEquals(1, c.getCoins()); // não deve perder moeda
+        assertThat(half).isEqualTo(0);
+        assertThat(c.getCoins()).isEqualTo(1);
     }
 
     // Teste estrutural
@@ -111,7 +111,7 @@ class CreatureTest {
     void testSetNegativeCoinsDoesNothing() {
         Creature c = new Creature(12, 100);
         c.addCoins(-1000);
-        assertEquals(100, c.getCoins());
+        assertThat(c.getCoins()).isEqualTo(100);
     }
 
     // X é arredondado para duas casas
@@ -119,6 +119,6 @@ class CreatureTest {
     void testXIsRoundedToTwoDecimalPlaces() {
         Creature c = new Creature(13);
         c.setX(0.67891f);
-        assertEquals(0.68f, c.getX());
+        assertThat(c.getX()).isEqualTo(0.68f);
     }
 }
