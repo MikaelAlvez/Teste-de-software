@@ -7,7 +7,7 @@ public class App {
     private final static int MAXIMUM_MATCH_DURATION = 10;
 
     public static void main(String[] args) {
-        final var match = new Match(4);
+        final var match = new Match(30);
         final var panel = new VisualizationPanel(match);
         final var frame = new JFrame("Simulação de Criaturas Saltitantes");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
