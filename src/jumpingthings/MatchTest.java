@@ -69,7 +69,7 @@ public class MatchTest {
         Creature c1 = match.getCreatures().get(29);
         match.setMaxDistanceStealCoins(2.0f);
         while (match.getCreatures().get(29).getCoins() != 1) match.iterate();
-        assertThat(c1.getCoins() == 1).isTrue();
+        assertThat(c1.getCoins()).isEqualTo(1);
     }
 
     // Não deve roubar moeda
@@ -100,6 +100,38 @@ public class MatchTest {
         final var match = new Match(2);
         match.setMaxDistanceStealCoins(1.1555f);
         assertThat(match.getMaxDistanceStealCoins()).isEqualTo(1.16f);
+    }
+
+    // deve retornar true quando metade das criaturas tiverem uma moeda
+    @Test
+    void shouldReturnTrueWhenHalfCreaturesHaveACoin() {
+        final var match = new Match(10);
+        match.setMaxDistanceStealCoins(2.0f);
+        // Roda até que a condição seja satisfeita ou limite de iterações seja atingido
+        int maxIterations = 1000;
+        int count = 0;
+        while (count < maxIterations) {
+            match.iterate();
+            count++;
+        }
+        assertThat(match.hasHalfElementsReachedOneCoin())
+                .isTrue();
+    }
+
+    // deve retornar false quando não for metade das criaturas
+    @Test
+    void shouldReturnFalseWhenNotHalfCreaturesHaveACoin() {
+        final var match = new Match(10);
+        match.setMaxDistanceStealCoins(2.0f);
+        // Roda até que a condição seja satisfeita ou limite de iterações seja atingido
+        int maxIterations = 10;
+        int count = 0;
+        while (count < maxIterations) {
+            match.iterate();
+            count++;
+        }
+        assertThat(match.hasHalfElementsReachedOneCoin())
+                .isFalse();
     }
 
     // Testes de fronteira
@@ -207,10 +239,9 @@ public class MatchTest {
     public void testMutacaoAlterarCondicaoDistancia() {
         Match match = new Match(2);
         Creature c1 = match.getCreatures().get(0);
-        Creature c2 = match.getCreatures().get(1);
         match.setMaxDistanceStealCoins(2.0f);
         match.iterate();
-        assertThat(c1.getCoins() > c2.getCoins()).isTrue();
+        assertThat(c1.getCoins()).isGreaterThan(1_000_000);
     }
 
 }

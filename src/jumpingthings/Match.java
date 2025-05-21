@@ -60,6 +60,13 @@ public class Match {
         return closest;
     }
 
+    public boolean hasHalfElementsReachedOneCoin() {
+        final var count = creatures.stream()
+                .filter(c -> c.getCoins() == 1)
+                .count();
+        return count >= Math.ceil(creatures.size() / 2.0);
+    }
+
     public void setMaxDistanceStealCoins(final float value) {
         final var valueFormatted = toTwoDecimalPlaces(value);
         if (value >= 0.01f && value <= 2.0f) this.maxDistanceStealCoins = valueFormatted;
