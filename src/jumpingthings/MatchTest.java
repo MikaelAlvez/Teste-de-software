@@ -25,6 +25,20 @@ public class MatchTest {
         assertThat(match.getCreatures()).hasSize(30).doesNotHaveSize(45);
     }
 
+    // Deve lançar uma Exception quando colocar um números que 1
+    @Test
+    public void testIfThrowsExceptionWhenInvalidCreatureValueEnteredMatch() {
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            new Match(1); // valor inválido (n <= 1)
+        });
+        assertEquals("Número de criaturas insuficientes.", exception.getMessage());
+        RuntimeException exception2 = assertThrows(RuntimeException.class, () -> {
+            new Match(-5); // valor inválido (n <= 1)
+        });
+        assertEquals("Número de criaturas insuficientes.", exception2.getMessage());
+    }
+
+
     // Verifica se após iteração há transferência de moedas
     @Test
     public void testIterateSomaMetadeDasMoedas() {

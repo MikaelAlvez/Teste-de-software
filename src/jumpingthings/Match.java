@@ -8,6 +8,7 @@ public class Match {
 
     public Match(final int n) {
         creatures = new ArrayList<>();
+        if (n <= 1) throw new RuntimeException("Número de criaturas insuficientes.");
         final var tmp = Math.min(n, 30);
         for (int i = 0; i < tmp; i++) creatures.add(new Creature(i + 1));
     }
