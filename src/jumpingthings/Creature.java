@@ -1,29 +1,29 @@
-    package jumpingthings;
+package jumpingthings;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Creature {
-    private final int id;
+    private int id;
     private float X = 0.0f;
     private int coins = 1_000_000;
 
     public Creature(final int id) {
-        this.id = id;
+        setId(id);
     }
 
     public Creature(final int id, final float x) {
-        this.id = id;
+        setId(id);
         setX(x);
     }
 
     public Creature(final int id, final int coins) {
-        this.id = id;
+        setId(id);
         setCoins(coins);
     }
 
     public Creature(final int id, final float x, final int coins) {
-        this.id = id;
+        setId(id);
         setX(x);
         setCoins(coins);
     }
@@ -102,6 +102,11 @@ public class Creature {
                 .floatValue();
     }
 
+
+    private void setId(final int value) {
+        if (value < 0)  throw new RuntimeException("Id inválido.");
+        this.id = value;
+    }
 
     public int getId() {
         return id;
