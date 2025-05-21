@@ -1,13 +1,17 @@
-package com.lucassf2k.main.jumpingthings;
+package jumpingthings;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Match {
     private final List<Creature> creatures;
+    private float maxDistanceStealCoins = 0.3f;
 
     public Match(final int n) {
         creatures = new ArrayList<>();
+        if (n <= 1) throw new RuntimeException("Número de criaturas insuficientes.");
         final var tmp = Math.min(n, 30);
         for (int i = 0; i < tmp; i++) creatures.add(new Creature(i + 1));
     }
@@ -27,7 +31,7 @@ public class Match {
         for (final var creature : creatures) creature.updatePosition();
         for (int i = 0; i < creatures.size(); i++) {
             final var current = creatures.get(i);
-            final var closest = findClosestWithinDistance(i, 0.3);
+            final var closest = findClosestWithinDistance(i, maxDistanceStealCoins);
             if (closest != null && current.getId() < closest.getId()) current.addCoins(closest.getHalfCoins());
         }
     }
@@ -54,6 +58,19 @@ public class Match {
             }
         }
         return closest;
+    }
+
+    public void setMaxDistanceStealCoins(final float value) {
+        final var valueFormatted = toTwoDecimalPlaces(value);
+        if (value >= 0.01f && value <= 2.0f) this.maxDistanceStealCoins = valueFormatted;
+    }
+
+    public float getMaxDistanceStealCoins() { return this.maxDistanceStealCoins; }
+
+    private float toTwoDecimalPlaces(final float value) {
+        return new BigDecimal(Float.toString(value))
+                .setScale(2, RoundingMode.HALF_EVEN)
+                .floatValue();
     }
 
     public List<Creature> getCreatures() {

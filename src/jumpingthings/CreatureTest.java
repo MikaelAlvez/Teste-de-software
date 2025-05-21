@@ -1,8 +1,9 @@
-package com.lucassf2k.main.jumpingthings;
+package jumpingthings;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;;
 
 class CreatureTest {
 
@@ -15,6 +16,14 @@ class CreatureTest {
         assertThat(c.getId()).isEqualTo(1);
         assertThat(c.getCoins()).isEqualTo(1_000_000);
         assertThat(c.getX()).isEqualTo(0.0f);
+    }
+
+    // Não deve criar uma criatura com os 3 parametros inválidos
+    @Test
+    void shouldNotCreateCreatureWithInvalidXAndNegativeCoins() {
+        final var c = new Creature(4, 2.0f, -100); // x inválido, moedas negativas
+        assertThat(c.getX()).isEqualTo(0.0f); // x resetado
+        assertThat(c.getCoins()).isEqualTo(1_000_000); // moedas default
     }
 
     // Valores customizados
@@ -51,7 +60,57 @@ class CreatureTest {
         assertThat(c.getCoins()).isEqualTo(500_000);
     }
 
+    // deve poder criar uma criatura informando o id e a posicão inicial
+    @Test
+    void shouldPossibleCreateCreatureWithIDAndPositionX() {
+        final var creature = new Creature(2, 0.1f);
+        assertThat(creature.getX()).isEqualTo(0.1f);
+        final var creature2 = new Creature(3, -0.5668f);
+        assertThat(creature2.getX()).isNotEqualTo(-0.56668f);
+        assertThat(creature2.getX()).isEqualTo(-0.57f);
+    }
+
+    @Test
+    void shouldNotBePossibleCreateCreatureWithInvalidPositionX() {
+        final var creature = new Creature(2, -2.0f);
+        assertThat(creature.getX()).isEqualTo(0.0f);
+    }
+
+    // não deve criar criatura com ids negativos
+    @Test
+    void shouldNotBePossibleCreateCreaturesWithNegativesIds() {
+        final var exception = assertThrows(RuntimeException.class, () -> {
+            new Creature(-1); // valor inválido (n <= 1)
+        });
+        assertEquals("Id inválido.", exception.getMessage());
+    }
+
     // Testes de fronteira
+
+    // Usando Integer.MAX_VALUE como moedas
+    @Test
+    public void testMaxIntCoins() {
+        Creature c = new Creature(1, Integer.MAX_VALUE);
+        assertThat(c.getCoins()).isEqualTo(Integer.MAX_VALUE);
+    }
+
+    // deve ser possível criar criaturas com Ids positivos mais o zero
+    @Test
+    void shouldBePossibleCreateCreaturesWithPositiveIdsPlusZero() {
+        final var creature = new Creature(0);
+        final var creature2 = new Creature(1);
+        assertThat(creature.getId()).isEqualTo(0);
+        assertThat(creature2.getId()).isEqualTo(1);
+    }
+
+    // Não deve alterar o valor das moedas para valores menores que zero
+    @Test
+    void shouldNotAbleChangeValueCoinsWithNegativesValues() {
+        final var creature = new Creature(3, -1);
+        assertThat(creature.getCoins()).isEqualTo(1_000_000);
+        final var creature2 = new Creature(2, 0);
+        assertThat(creature2.getCoins()).isEqualTo(0);
+    }
 
     // X = -1
     @Test

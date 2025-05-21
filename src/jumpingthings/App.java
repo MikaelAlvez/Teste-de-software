@@ -1,4 +1,4 @@
-package com.lucassf2k.main.jumpingthings;
+package jumpingthings;
 
 import javax.swing.*;
 
