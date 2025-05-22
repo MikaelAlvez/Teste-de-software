@@ -13,6 +13,7 @@ public class App {
         * Ou quando a metade das criaturas chegam em 1 de coins por: match.hasHalfElementsReachedOneCoin()
         * - Possíveis erro
         *   - PACKAGE errado
+        *   - REINSTALAR O JUNIT E ASSERJ
         * */
 
         final var match = new Match(30);
