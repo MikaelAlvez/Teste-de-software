@@ -1,9 +1,11 @@
-package jumpingthings;
+package jumpingthings.tests;
 
+import jumpingthings.main.Creature;
+import jumpingthings.main.Match;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 

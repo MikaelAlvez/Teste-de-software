@@ -1,4 +1,4 @@
-package jumpingthings;
+package jumpingthings.main;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
