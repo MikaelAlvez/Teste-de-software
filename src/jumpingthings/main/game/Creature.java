@@ -1,17 +1,32 @@
-package jumpingthings.main;
+package jumpingthings.main.game;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class DefaultGameplay {
+public class Creature {
+    private int id;
     private float X = 0.0f;
     private int coins = 1_000_000;
 
-    public DefaultGameplay(final float x, final int coins) {
+    public Creature(final int id) {
+        setId(id);
+    }
+
+    public Creature(final int id, final float x) {
+        setId(id);
         setX(x);
+    }
+
+    public Creature(final int id, final int coins) {
+        setId(id);
         setCoins(coins);
     }
 
+    public Creature(final int id, final float x, final int coins) {
+        setId(id);
+        setX(x);
+        setCoins(coins);
+    }
 
     /**
      * Adiciona uma quantidade positiva de moedas ao total atual da criatura.
@@ -85,6 +100,16 @@ public class DefaultGameplay {
         return new BigDecimal(Float.toString(value))
                 .setScale(2, RoundingMode.HALF_EVEN)
                 .floatValue();
+    }
+
+
+    private void setId(final int value) {
+        if (value < 0)  throw new RuntimeException("Id inválido.");
+        this.id = value;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public float getX() {

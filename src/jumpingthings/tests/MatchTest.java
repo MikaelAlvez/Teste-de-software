@@ -1,7 +1,7 @@
 package jumpingthings.tests;
 
-import jumpingthings.main.Creature;
-import jumpingthings.main.Match;
+import jumpingthings.main.game.Creature;
+import jumpingthings.main.game.Match;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package jumpingthings.tests;
 
-import jumpingthings.main.Creature;
+import jumpingthings.main.game.Creature;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

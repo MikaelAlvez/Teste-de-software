@@ -1,17 +1,16 @@
-package jumpingthings.main;
+package jumpingthings.main.game;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Cluster {
     private int id;
-    private final List<Creature> members = new ArrayList<>();
     private final DefaultGameplay gameplay;
 
     public Cluster(final int id, final List<Creature> creatures) {
         setId(id);
         this.gameplay = new DefaultGameplay(0.0F, 0);
-        setMembers(creatures);
+        this.gameplay.addCoins(creatures.stream().mapToInt(Creature::getCoins).sum());
+        this.gameplay.setX(creatures.getFirst().getX());
     }
 
     private void setId(final int id) {
@@ -21,18 +20,6 @@ public class Cluster {
 
     public int getId() {
         return this.id;
-    }
-
-    public void setMembers(final List<Creature> creatures) {
-        if (!creatures.isEmpty()) {
-            this.members.addAll(creatures);
-            final var totalCoins = this.members.stream().mapToInt(Creature::getCoins).sum();
-            this.gameplay.addCoins(totalCoins);
-        };
-    }
-
-    public List<Creature> getMembers() {
-        return this.members;
     }
 
     public DefaultGameplay getGameplay() {
