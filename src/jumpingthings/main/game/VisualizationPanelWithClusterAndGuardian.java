@@ -1,5 +1,7 @@
 package jumpingthings.main.game;
 
+import jumpingthings.main.common.Env;
+
 import javax.swing.*;
 import java.awt.*;
 import java.text.NumberFormat;
@@ -14,7 +16,7 @@ public class VisualizationPanelWithClusterAndGuardian extends JPanel {
 
     public VisualizationPanelWithClusterAndGuardian(final MatchWithClusterAndGuardian match) {
         this.match = Objects.requireNonNull(match);
-        setPreferredSize(new Dimension(800, 600));
+        setPreferredSize(new Dimension(Env.WINDOW_WIDTH, Env.WINDOW_HEIGHT));
     }
 
     @Override
@@ -62,7 +64,7 @@ public class VisualizationPanelWithClusterAndGuardian extends JPanel {
             int y = lineY - 20;
 
             g.setColor(Color.RED);
-            g.fillRect(x - 5, y, 14, 14);
+            g.fillOval(x - 5, y, 14, 14);
             g.setColor(Color.BLACK);
             g.drawString("CL " + cluster.getId(), x + 15, y + 10);
         }

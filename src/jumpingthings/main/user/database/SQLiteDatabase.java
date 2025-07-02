@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SQLiteDatabase {
-    private static final String URL = "jdbc:sqlite:jumpthings.db";
+    public static final String URL = "jdbc:sqlite:jumpthings.db";
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(SQLiteDatabase.URL);
+    public static Connection getConnection(final String url) throws SQLException {
+        return DriverManager.getConnection(url);
     }
 
-    public static void initialize() {
-        try (Connection conn = getConnection(); Statement stmt = conn.createStatement()) {
+    public static void initialize(final String url) {
+        try (Connection conn = getConnection(url); Statement stmt = conn.createStatement()) {
             stmt.executeUpdate("""
                 CREATE TABLE IF NOT EXISTS users (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,

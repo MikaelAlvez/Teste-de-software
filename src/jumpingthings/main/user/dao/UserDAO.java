@@ -8,12 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO {
+    private final String url;
+
+
+    public UserDAO(final String url) {
+        this.url = url;
+    }
+
     public void create(User user) throws SQLException {
         final String sql = """
             INSERT INTO users (login, password, avatar, score, simulations_run, successful_simulations)
             VALUES (?, ?, ?, ?, ?, ?)
         """;
-        try (Connection conn = SQLiteDatabase.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = SQLiteDatabase.getConnection(this.url); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, user.login());
             stmt.setString(2, user.password());
             stmt.setString(3, user.avatar());
@@ -26,7 +33,7 @@ public class UserDAO {
 
     public boolean deleteByLogin(String login) throws SQLException {
         final String sql = "DELETE FROM users WHERE login = ?";
-        try (Connection conn = SQLiteDatabase.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = SQLiteDatabase.getConnection(this.url); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, login);
             return stmt.executeUpdate() > 0;
         }
@@ -35,7 +42,7 @@ public class UserDAO {
     public List<User> findAll() throws SQLException {
         List<User> users = new ArrayList<>();
         final String sql = "SELECT * FROM users";
-        try (Connection conn = SQLiteDatabase.getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection conn = SQLiteDatabase.getConnection(this.url); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 users.add(new User(
                         rs.getInt("id"),
@@ -53,7 +60,7 @@ public class UserDAO {
 
     public User findByLogin(String login) throws SQLException {
         final String sql = "SELECT * FROM users WHERE login = ?";
-        try (Connection conn = SQLiteDatabase.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = SQLiteDatabase.getConnection(this.url); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, login);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -78,7 +85,7 @@ public class UserDAO {
             SET score = ?, simulations_run = ?, successful_simulations = ?
             WHERE id = ?
         """;
-        try (Connection conn = SQLiteDatabase.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = SQLiteDatabase.getConnection(this.url); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, score);
             stmt.setInt(2, simulationsRun);
             stmt.setInt(3, successfulSimulations);

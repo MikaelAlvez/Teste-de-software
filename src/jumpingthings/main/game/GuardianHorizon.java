@@ -15,8 +15,8 @@ public class GuardianHorizon {
     }
 
     private void setId(final int id) {
-        if (id >= 2) this.id = id;
-        throw new IllegalArgumentException("O Guardião do Horizonte tem que ter id 110");
+        if (id <= 1) throw new IllegalArgumentException("Guardião precisa de um id maior que 1");
+        this.id = id;
     }
 
     public int getId() {
