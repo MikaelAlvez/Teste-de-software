@@ -50,8 +50,7 @@ public class SignInView extends JPanel {
         // Botões
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         JButton loginButton = new JButton("Login");
-        JButton createAccountButton = new JButton("Criar Conta");
-        JButton navigateToDeleteViewButton = new JButton("Deletar Conta");
+        JButton backButton = new JButton("Voltar");
 
         loginButton.addActionListener(e -> {
             String login = loginField.getText().trim();
@@ -61,16 +60,10 @@ public class SignInView extends JPanel {
             JOptionPane.showMessageDialog(this,
                     "Tentando login com:\nLogin: " + login + "\nSenha: " + password);
         });
-
-        createAccountButton.addActionListener(e -> {
-            RouterView.getInstance().navigateTo("/create/user");
-        });
-
-        navigateToDeleteViewButton.addActionListener(e -> RouterView.getInstance().navigateTo("/delete/user"));
+        backButton.addActionListener(e ->RouterView.getInstance().navigateTo("/"));
 
         buttonPanel.add(loginButton);
-        buttonPanel.add(createAccountButton);
-        buttonPanel.add(navigateToDeleteViewButton);
+        buttonPanel.add(backButton);
 
         gbc.gridx = 0;
         gbc.gridy = 3;

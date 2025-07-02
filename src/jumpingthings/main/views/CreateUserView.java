@@ -92,11 +92,11 @@ public class CreateUserView extends JPanel {
             JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
 
             // Após cadastro, pode navegar de volta para tela de login
-            RouterView.getInstance().navigateTo("signin");
+            RouterView.getInstance().navigateTo("/sign/in");
         });
 
         backButton.addActionListener(e -> {
-            RouterView.getInstance().navigateTo("signin");
+            RouterView.getInstance().navigateTo("/");
         });
 
         buttonPanel.add(saveButton);

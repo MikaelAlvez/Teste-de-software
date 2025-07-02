@@ -63,9 +63,7 @@ public class DeleteUserView extends JPanel {
             }
         });
 
-        backButton.addActionListener(e -> {
-            RouterView.getInstance().navigateTo("signin");
-        });
+        backButton.addActionListener(e -> RouterView.getInstance().navigateTo("/"));
 
         buttonPanel.add(deleteButton);
         buttonPanel.add(backButton);
