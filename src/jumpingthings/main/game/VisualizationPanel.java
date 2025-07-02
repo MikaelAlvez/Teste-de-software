@@ -1,4 +1,4 @@
-package jumpingthings.main;
+package jumpingthings.main.game;
 
 import javax.swing.*;
 import java.awt.*;
