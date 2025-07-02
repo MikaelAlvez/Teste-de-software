@@ -25,5 +25,6 @@
     </orderEntry>
     <orderEntry type="library" name="assertj.core" level="application" />
     <orderEntry type="library" name="junit.jupiter.api" level="application" />
+    <orderEntry type="library" name="xerial.sqlite.jdbc" level="application" />
   </component>
 </module>

@@ -1,16 +1,22 @@
 package jumpingthings.main.views;
 
+import jumpingthings.main.user.service.UserService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.sql.SQLException;
+import java.util.Objects;
 
 public class CreateUserView extends JPanel {
     private JTextField loginField;
     private JPasswordField passwordField;
     private JLabel avatarLabel;
     private File selectedAvatar;
+    private final UserService userService;
 
-    public CreateUserView() {
+    public CreateUserView(final UserService userService) {
+        this.userService = userService;
         startUp();
     }
 
@@ -79,16 +85,25 @@ public class CreateUserView extends JPanel {
         JButton backButton = new JButton("Voltar");
 
         saveButton.addActionListener(e -> {
-            String login = loginField.getText().trim();
-            String password = new String(passwordField.getPassword());
-            String avatar = selectedAvatar != null ? selectedAvatar.getAbsolutePath() : null;
-
+            final var login = loginField.getText().trim();
+            final var password = new String(passwordField.getPassword());
+            final var avatar = selectedAvatar != null ? selectedAvatar.getAbsolutePath() : null;
             if (login.isEmpty() || password.isEmpty() || avatar == null) {
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             // Aqui você pode chamar o UserDAO para salvar o usuário
+            try {
+                final var loginAlreadyExists = this.userService.findUserByLogin(login);
+                if (!loginAlreadyExists.login().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Login já existente!");
+                    return;
+                }
+                this.userService.createUser(login, password, avatar);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
             JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
 
             // Após cadastro, pode navegar de volta para tela de login

@@ -1,13 +1,20 @@
 package jumpingthings.main.views;
 
+import jumpingthings.main.App;
+import jumpingthings.main.user.service.UserService;
+
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.Objects;
 
 public class SignInView extends JPanel {
     private JTextField loginField;
     private JPasswordField passwordField;
+    private final UserService userService;
 
-    public SignInView() {
+    public SignInView(final UserService userService) {
+        this.userService = userService;
         startUp();
     }
 
@@ -53,12 +60,18 @@ public class SignInView extends JPanel {
         JButton backButton = new JButton("Voltar");
 
         loginButton.addActionListener(e -> {
-            String login = loginField.getText().trim();
-            String password = new String(passwordField.getPassword());
+            final var login = loginField.getText().trim();
+            final var password = new String(passwordField.getPassword());
 
-            // Aqui você colocaria verificação com UserDAO
-            JOptionPane.showMessageDialog(this,
-                    "Tentando login com:\nLogin: " + login + "\nSenha: " + password);
+            try {
+                final var userAlreadyExists = userService.findUserByLogin(login);
+                if (Objects.equals(userAlreadyExists.password(), password)) {
+                    App.authenticated = userAlreadyExists.login();
+                    RouterView.getInstance().navigateTo("/game");
+                } else RouterView.getInstance().navigateTo("/");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         });
         backButton.addActionListener(e ->RouterView.getInstance().navigateTo("/"));
 

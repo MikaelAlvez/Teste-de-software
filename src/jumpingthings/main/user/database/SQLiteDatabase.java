@@ -1,5 +1,7 @@
 package jumpingthings.main.user.database;
 
+import jumpingthings.main.common.Env;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -28,5 +30,9 @@ public class SQLiteDatabase {
         } catch (SQLException e) {
            throw new RuntimeException(e);
         }
+    }
+
+    public static void main(String[] args) {
+        SQLiteDatabase.initialize(Env.DB_URL);
     }
 }

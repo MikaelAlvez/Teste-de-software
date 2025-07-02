@@ -1,12 +1,17 @@
 package jumpingthings.main.views;
 
+import jumpingthings.main.user.service.UserService;
+
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class DeleteUserView extends JPanel {
     private JTextField loginField;
+    private final UserService userService;
 
-    public DeleteUserView() {
+    public DeleteUserView(final UserService userService) {
+        this.userService = userService;
         startUp();
     }
 
@@ -43,18 +48,20 @@ public class DeleteUserView extends JPanel {
         JButton backButton = new JButton("Voltar");
 
         deleteButton.addActionListener(e -> {
-            String login = loginField.getText().trim();
+            final var login = loginField.getText().trim();
             if (login.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Informe o login do usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Aqui seria a chamada para deletar o usuário via UserDAO
-            // Exemplo fictício:
-            // boolean deleted = new UserDAO().deleteByLogin(login);
-            boolean deleted = true; // simulação
+            boolean isDeleted;
+            try {
+                isDeleted = this.userService.deleteUserByLogin(login);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
 
-            if (deleted) {
+            if (isDeleted) {
                 JOptionPane.showMessageDialog(this, "Usuário deletado com sucesso.");
                 loginField.setText("");
                 RouterView.getInstance().navigateTo("/sign/in");
