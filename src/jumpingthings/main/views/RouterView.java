@@ -17,6 +17,7 @@ public class RouterView extends JFrame {
     public RouterView() {
         setTitle("Aplicação");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setPreferredSize(new Dimension(Env.WINDOW_WIDTH, Env.WINDOW_HEIGHT));
         setSize(Env.WINDOW_WIDTH, Env.WINDOW_HEIGHT);
         setLocationRelativeTo(null);
 
@@ -59,6 +60,8 @@ public class RouterView extends JFrame {
     // Navega para uma tela pelo nome
     public void navigateTo(String name) {
         if (views.containsKey(name)) {
+            final var view = views.get(name);
+            if (view instanceof GameView gameview) gameview.restartSimulation();
             cardLayout.show(cardPanel, name);
         } else {
             System.err.println("View '" + name + "' não existe.");

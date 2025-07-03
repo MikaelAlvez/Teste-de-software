@@ -23,6 +23,8 @@ public class App {
             router.addView("/create/user", new CreateUserView(userService));
             // Delete User
             router.addView("/delete/user", new DeleteUserView(userService));
+            // Game
+            router.addView("/game", new GameView());
             // Statistics
             final var statsList = Arrays.asList(
                     new StatisticsView.UserStats("lucas", 10,8),

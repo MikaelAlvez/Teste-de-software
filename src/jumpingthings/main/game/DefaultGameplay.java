@@ -110,6 +110,11 @@ public class DefaultGameplay {
         if (tmpX >= -1 && tmpX <= 1) this.X = tmpX;
     }
 
+    public void reset() {
+        setX(0.0F);
+        setCoins(1_000_000);
+    }
+
     public int getCoins() {
         return coins;
     }

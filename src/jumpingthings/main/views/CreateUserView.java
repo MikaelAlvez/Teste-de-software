@@ -5,6 +5,10 @@ import jumpingthings.main.user.service.UserService;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -87,22 +91,52 @@ public class CreateUserView extends JPanel {
         saveButton.addActionListener(e -> {
             final var login = loginField.getText().trim();
             final var password = new String(passwordField.getPassword());
-            final var avatar = selectedAvatar != null ? selectedAvatar.getAbsolutePath() : null;
-            if (login.isEmpty() || password.isEmpty() || avatar == null) {
+            final var avatarPath = selectedAvatar != null ? selectedAvatar.getAbsolutePath() : null;
+            if (login.isEmpty() || password.isEmpty() || avatarPath == null) {
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             // Aqui você pode chamar o UserDAO para salvar o usuário
             try {
+                // Verifica duplicidade de login
                 final var loginAlreadyExists = this.userService.findUserByLogin(login);
                 if (!loginAlreadyExists.login().isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Login já existente!");
                     return;
                 }
-                this.userService.createUser(login, password, avatar);
+
+                // Cria Path de origem
+                Path source = Path.of(avatarPath);
+
+                // Extrai extensão
+                String ext = "";
+                int dotIndex = avatarPath.lastIndexOf('.');
+                if (dotIndex >= 0) {
+                    ext = avatarPath.substring(dotIndex); // exemplo: ".jpg"
+                }
+
+                // Cria pasta caso não exista
+                Path destDir = Path.of("src", "resources");
+                Files.createDirectories(destDir);
+
+                // Caminho final: src/resources/login.ext
+                Path target = destDir.resolve(login + ext);
+
+                // Copia o arquivo
+                Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+
+                // Chama serviço com caminho final salvo
+                this.userService.createUser(login, password, target.toString());
+
+                JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
+                RouterView.getInstance().navigateTo("/sign/in");
+
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                throw new RuntimeException("Erro ao salvar usuário no banco", ex);
+            } catch (IOException ioEx) {
+                JOptionPane.showMessageDialog(this, "Erro ao copiar avatar!", "Erro", JOptionPane.ERROR_MESSAGE);
+                throw new RuntimeException(ioEx);
             }
             JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
 

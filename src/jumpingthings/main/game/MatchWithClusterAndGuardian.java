@@ -126,6 +126,20 @@ public class MatchWithClusterAndGuardian {
         return onlyGuardianLeft || oneCreatureVsGuardian;
     }
 
+    public void reset() {
+        this.creatures.clear();
+        this.clusters.clear();
+        this.nextClusterId = 41;
+
+        // Recria as criaturas
+        for (int i = 0; i < 30; i++) {
+            this.creatures.add(new Creature(i + 1));
+        }
+
+        // Reinicia o guardião com novas moedas e posição
+        this.guardian.getGameplay().reset();
+    }
+
     public GuardianHorizon getGuardian() {
         return guardian;
     }
