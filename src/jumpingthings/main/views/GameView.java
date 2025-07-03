@@ -8,6 +8,7 @@ import jumpingthings.main.user.service.UserService;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class GameView extends JPanel {
     private static final int TIMER_MS = 1000;
@@ -65,9 +66,28 @@ public class GameView extends JPanel {
             match.iterate();
             panel.repaint();
             counter++;
-            if (counter >= MAXIMUM_MATCH_DURATION || match.isFinished()) {
+            if (counter >= MAXIMUM_MATCH_DURATION) {
+              try {
+                final var user = this.userService.findUserByLogin(App.authenticated);
+                this.userService.updateScore(user.id(), user.score() + 10);
+                this.userService.updateSimulationsRun(user.id(), user.simulationsRun() + 1);
                 timer.stop();
-                JOptionPane.showMessageDialog(this, "Simulação encerrada.", "Fim", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Simulação encerrada por limite de execução +10.", "Fim", JOptionPane.INFORMATION_MESSAGE);
+              } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+              }
+            }
+            if (match.isFinished()) {
+              try {
+                final var user = this.userService.findUserByLogin(App.authenticated);
+                this.userService.updateScore(user.id(), user.score() + 100);
+                this.userService.updateSimulationsRun(user.id(), user.simulationsRun() + 1);
+                this.userService.updateSuccessfulSimulations(user.id(), user.successfulSimulations() + 1);
+                timer.stop();
+                JOptionPane.showMessageDialog(this, "Você GANHOU +100 pontos.", "Fim", JOptionPane.INFORMATION_MESSAGE);
+              } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+              }
             }
         });
         timer.start();
