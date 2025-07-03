@@ -2,12 +2,13 @@ package jumpingthings.main.user.dao;
 
 import jumpingthings.main.user.database.SQLiteDatabase;
 import jumpingthings.main.user.model.User;
+import jumpingthings.main.user.protocols.UserDAOInterface;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
+public class UserDAO implements UserDAOInterface {
     private final String url;
 
 
