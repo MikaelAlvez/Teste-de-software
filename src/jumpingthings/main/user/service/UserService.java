@@ -2,12 +2,13 @@ package jumpingthings.main.user.service;
 
 import jumpingthings.main.user.model.User;
 import jumpingthings.main.user.protocols.UserDAOInterface;
+import jumpingthings.main.user.protocols.UserServiceInterface;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.OptionalDouble;
 
-public class UserService {
+public class UserService implements UserServiceInterface {
     private final UserDAOInterface userDAO;
 
     public UserService(final UserDAOInterface userDAO) {

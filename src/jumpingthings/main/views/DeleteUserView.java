@@ -1,5 +1,6 @@
 package jumpingthings.main.views;
 
+import jumpingthings.main.user.protocols.UserServiceInterface;
 import jumpingthings.main.user.service.UserService;
 
 import javax.swing.*;
@@ -8,9 +9,9 @@ import java.sql.SQLException;
 
 public class DeleteUserView extends JPanel {
     private JTextField loginField;
-    private final UserService userService;
+    private final UserServiceInterface userService;
 
-    public DeleteUserView(final UserService userService) {
+    public DeleteUserView(final UserServiceInterface userService) {
         this.userService = userService;
         startUp();
     }

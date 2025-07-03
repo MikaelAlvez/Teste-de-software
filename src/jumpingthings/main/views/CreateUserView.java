@@ -1,5 +1,6 @@
 package jumpingthings.main.views;
 
+import jumpingthings.main.user.protocols.UserServiceInterface;
 import jumpingthings.main.user.service.UserService;
 
 import javax.swing.*;
@@ -17,9 +18,9 @@ public class CreateUserView extends JPanel {
     private JPasswordField passwordField;
     private JLabel avatarLabel;
     private File selectedAvatar;
-    private final UserService userService;
+    private final UserServiceInterface userService;
 
-    public CreateUserView(final UserService userService) {
+    public CreateUserView(final UserServiceInterface userService) {
         this.userService = userService;
         startUp();
     }

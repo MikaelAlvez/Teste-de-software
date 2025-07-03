@@ -4,6 +4,7 @@ package jumpingthings.main.views;
 import jumpingthings.main.App;
 import jumpingthings.main.game.MatchWithClusterAndGuardian;
 import jumpingthings.main.game.VisualizationPanelWithClusterAndGuardian;
+import jumpingthings.main.user.protocols.UserServiceInterface;
 import jumpingthings.main.user.service.UserService;
 
 import javax.swing.*;
@@ -18,9 +19,9 @@ public class GameView extends JPanel {
     private VisualizationPanelWithClusterAndGuardian panel;
     private Timer timer;
     private int counter = 0;
-    private final UserService userService;
+    private final UserServiceInterface userService;
 
-    public GameView(final UserService userService) {
+    public GameView(final UserServiceInterface userService) {
         this.userService = userService;
         startUp();
     }

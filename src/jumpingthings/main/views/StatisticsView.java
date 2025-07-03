@@ -1,6 +1,7 @@
 package jumpingthings.main.views;
 
 import jumpingthings.main.App;
+import jumpingthings.main.user.protocols.UserServiceInterface;
 import jumpingthings.main.user.service.UserService;
 
 import javax.swing.*;
@@ -11,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StatisticsView extends JPanel {
-    private final UserService userService;
+    private final UserServiceInterface userService;
 
-    public StatisticsView(final UserService userService) {
+    public StatisticsView(final UserServiceInterface userService) {
         this.userService = userService;
         startUp();
     }

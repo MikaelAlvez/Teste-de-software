@@ -1,6 +1,7 @@
 package jumpingthings.main.views;
 
 import jumpingthings.main.App;
+import jumpingthings.main.user.protocols.UserServiceInterface;
 import jumpingthings.main.user.service.UserService;
 
 import javax.swing.*;
@@ -11,9 +12,9 @@ import java.util.Objects;
 public class SignInView extends JPanel {
     private JTextField loginField;
     private JPasswordField passwordField;
-    private final UserService userService;
+    private final UserServiceInterface userService;
 
-    public SignInView(final UserService userService) {
+    public SignInView(final UserServiceInterface userService) {
         this.userService = userService;
         startUp();
     }
