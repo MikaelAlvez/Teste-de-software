@@ -8,13 +8,16 @@ public class Cluster {
 
     public Cluster(final int id, final List<Creature> creatures) {
         setId(id);
+        if (creatures.isEmpty()) throw new IllegalArgumentException("Criaturas não podem ser vazias!");
         this.gameplay = new DefaultGameplay(0.0F, 0);
         this.gameplay.addCoins(creatures.stream().mapToInt(Creature::getCoins).sum());
         this.gameplay.setX(creatures.getFirst().getX());
     }
 
     private void setId(final int id) {
-        if (id <= 40 || id >= 100) throw new IllegalArgumentException("Faixa de id inválida!");
+        if (id <= 40 || id >= 100) {
+            throw new IllegalArgumentException("Faixa de id inválida!");
+        }
         this.id = id;
     }
 
