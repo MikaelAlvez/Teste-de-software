@@ -93,4 +93,34 @@ public class UserDAO {
             stmt.executeUpdate();
         }
     }
+
+    // Atualiza apenas o score
+    public void updateScore(int id, int newScore) throws SQLException {
+        final String sql = "UPDATE users SET score = ? WHERE id = ?";
+        try (Connection conn = SQLiteDatabase.getConnection(this.url); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, newScore);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        }
+    }
+
+    // Atualiza apenas o número de simulações executadas
+    public void updateSimulationsRun(int id, int newSimulationsRun) throws SQLException {
+        final String sql = "UPDATE users SET simulations_run = ? WHERE id = ?";
+        try (Connection conn = SQLiteDatabase.getConnection(this.url); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, newSimulationsRun);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        }
+    }
+
+    // Atualiza apenas o número de simulações bem-sucedidas
+    public void updateSuccessfulSimulations(int id, int newSuccessfulSimulations) throws SQLException {
+        final String sql = "UPDATE users SET successful_simulations = ? WHERE id = ?";
+        try (Connection conn = SQLiteDatabase.getConnection(this.url); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, newSuccessfulSimulations);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        }
+    }
 }

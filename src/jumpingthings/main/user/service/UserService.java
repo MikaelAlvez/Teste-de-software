@@ -40,7 +40,20 @@ public class UserService {
         userDAO.updateScoreAndSimulations(id, score, simulationsRun, successfulSimulations);
     }
 
-    // 6. Obter estatísticas gerais
+    // ✅ 6. Atualizações Individuais
+    public void updateScore(int id, int newScore) throws SQLException {
+        userDAO.updateScore(id, newScore);
+    }
+
+    public void updateSimulationsRun(int id, int newSimulationsRun) throws SQLException {
+        userDAO.updateSimulationsRun(id, newSimulationsRun);
+    }
+
+    public void updateSuccessfulSimulations(int id, int newSuccessfulSimulations) throws SQLException {
+        userDAO.updateSuccessfulSimulations(id, newSuccessfulSimulations);
+    }
+
+    // 7. Obter estatísticas gerais
     public SimulationStats getSimulationStatistics() throws SQLException {
         final var users = userDAO.findAll();
         final var totalSimulations = users.stream().mapToInt(User::simulationsRun).sum();

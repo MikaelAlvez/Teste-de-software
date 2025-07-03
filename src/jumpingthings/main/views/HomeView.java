@@ -30,17 +30,22 @@ public class HomeView extends JPanel {
         JButton statisticsButton = new JButton("Ver Estatísticas");
         statisticsButton.setPreferredSize(smallButton);
 
+        JButton aboutButton = new JButton("Sobre");
+        aboutButton.setPreferredSize(smallButton);
+
         // Ações
         loginButton.addActionListener(e -> RouterView.getInstance().navigateTo("/sign/in"));
         createAccountButton.addActionListener(e -> RouterView.getInstance().navigateTo("/create/user"));
         deleteAccountButton.addActionListener(e -> RouterView.getInstance().navigateTo("/delete/user"));
         statisticsButton.addActionListener(e -> RouterView.getInstance().navigateTo("/statistics"));
+        aboutButton.addActionListener(e -> RouterView.getInstance().navigateTo("/about"));
 
         // Adiciona ao painel
         buttonPanel.add(loginButton);
         buttonPanel.add(createAccountButton);
         buttonPanel.add(deleteAccountButton);
         buttonPanel.add(statisticsButton);
+        buttonPanel.add(aboutButton);
 
         add(buttonPanel, BorderLayout.CENTER);
     }
