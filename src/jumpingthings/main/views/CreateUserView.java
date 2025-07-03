@@ -101,12 +101,12 @@ public class CreateUserView extends JPanel {
             try {
                 // Verifica duplicidade de login
                 final var loginAlreadyExists = this.userService.findUserByLogin(login);
-                if (!loginAlreadyExists.login().isEmpty()) {
+                if (loginAlreadyExists != null) {
                     JOptionPane.showMessageDialog(this, "Login já existente!");
                     return;
                 }
 
-                // Cria Path de origem
+                // Cria Path de origemloginAlreadyExists
                 Path source = Path.of(avatarPath);
 
                 // Extrai extensão
@@ -138,10 +138,6 @@ public class CreateUserView extends JPanel {
                 JOptionPane.showMessageDialog(this, "Erro ao copiar avatar!", "Erro", JOptionPane.ERROR_MESSAGE);
                 throw new RuntimeException(ioEx);
             }
-            JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
-
-            // Após cadastro, pode navegar de volta para tela de login
-            RouterView.getInstance().navigateTo("/sign/in");
         });
 
         backButton.addActionListener(e -> {

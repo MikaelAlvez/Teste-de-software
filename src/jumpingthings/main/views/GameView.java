@@ -37,7 +37,7 @@ public class GameView extends JPanel {
         backButton.addActionListener(e -> {
             removeSimulation();
             App.authenticated = null;
-            RouterView.getInstance().navigateTo("/sign/in");
+            System.exit(0);
         });
 
         JPanel footer = new JPanel();
@@ -69,6 +69,7 @@ public class GameView extends JPanel {
             if (counter >= MAXIMUM_MATCH_DURATION) {
               try {
                 final var user = this.userService.findUserByLogin(App.authenticated);
+                if (user == null) return;
                 this.userService.updateScore(user.id(), user.score() + 10);
                 this.userService.updateSimulationsRun(user.id(), user.simulationsRun() + 1);
                 timer.stop();
