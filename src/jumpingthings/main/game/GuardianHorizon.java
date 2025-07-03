@@ -10,8 +10,10 @@ public class GuardianHorizon {
     }
 
     public void addCluster(final Cluster cluster) {
-        if (cluster != null) this.gameplay.addCoins(cluster.getGameplay().getCoins());
-        throw new IllegalArgumentException("Cluster não pode ser nulo!");
+        if (cluster == null) {
+            throw new IllegalArgumentException("Cluster não pode ser nulo!");
+        }
+        this.gameplay.addCoins(cluster.getGameplay().getCoins());
     }
 
     private void setId(final int id) {
