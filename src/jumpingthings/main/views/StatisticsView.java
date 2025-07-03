@@ -1,13 +1,23 @@
 package jumpingthings.main.views;
 
+import jumpingthings.main.user.service.UserService;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StatisticsView extends JPanel {
+    private final UserService userService;
 
-    public StatisticsView(List<UserStats> stats) {
+    public StatisticsView(final UserService userService) {
+        this.userService = userService;
+        startUp();
+    }
+
+    private void startUp() {
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Estatísticas de Jogadores", SwingConstants.CENTER);
@@ -24,17 +34,24 @@ public class StatisticsView extends JPanel {
                 "Média Total (%)"
         };
 
+
+        List<UserStats> usersStats = new ArrayList<>();
+        try {
+            final var users = this.userService.getAllUsers();
+            for (final var user : users) usersStats.add(new UserStats(user.login(), user.simulationsRun(), user.successfulSimulations()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         // Cálculos totais
-        int totalSimulacoes = stats.stream().mapToInt(u -> u.total).sum();
-        int totalSucessos = stats.stream().mapToInt(u -> u.success).sum();
-        double mediaGeral = stats.isEmpty() ? 0 : ((double) totalSucessos / totalSimulacoes) * 100;
+        final var totalSimulacoes = usersStats.stream().mapToInt(u -> u.total).sum();
+        final var totalSucessos = usersStats.stream().mapToInt(u -> u.success).sum();
+        final var mediaGeral = (usersStats.isEmpty() || totalSimulacoes == 0) ? 0 : ((double) totalSucessos / totalSimulacoes) * 100;
 
         // Monta dados
-        Object[][] data = new Object[stats.size()][columns.length];
-        for (int i = 0; i < stats.size(); i++) {
-            UserStats u = stats.get(i);
-            double mediaUsuario = u.total == 0 ? 0 : ((double) u.success / u.total) * 100;
-
+        final var data = new Object[usersStats.size()][columns.length];
+        for (int i = 0; i < usersStats.size(); i++) {
+            final var u = usersStats.get(i);
+            final var mediaUsuario = u.total == 0 ? 0 : ((double) u.success / u.total) * 100;
             data[i] = new Object[]{
                     u.login,
                     u.total,

@@ -1,8 +1,11 @@
 package jumpingthings.main.views;
 
 
+import jumpingthings.main.App;
 import jumpingthings.main.game.MatchWithClusterAndGuardian;
 import jumpingthings.main.game.VisualizationPanelWithClusterAndGuardian;
+import jumpingthings.main.user.service.UserService;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,8 +17,10 @@ public class GameView extends JPanel {
     private VisualizationPanelWithClusterAndGuardian panel;
     private Timer timer;
     private int counter = 0;
+    private final UserService userService;
 
-    public GameView() {
+    public GameView(final UserService userService) {
+        this.userService = userService;
         startUp();
     }
 
@@ -30,6 +35,7 @@ public class GameView extends JPanel {
         JButton backButton = new JButton("Sair");
         backButton.addActionListener(e -> {
             removeSimulation();
+            App.authenticated = null;
             RouterView.getInstance().navigateTo("/sign/in");
         });
 

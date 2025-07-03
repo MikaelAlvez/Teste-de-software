@@ -42,17 +42,13 @@ public class UserService {
 
     // 6. Obter estatísticas gerais
     public SimulationStats getSimulationStatistics() throws SQLException {
-        List<User> users = userDAO.findAll();
-
-        int totalSimulations = users.stream().mapToInt(User::simulationsRun).sum();
-        int totalSuccessfulSimulations = users.stream().mapToInt(User::successfulSimulations).sum();
-
+        final var users = userDAO.findAll();
+        final var totalSimulations = users.stream().mapToInt(User::simulationsRun).sum();
+        final var totalSuccessfulSimulations = users.stream().mapToInt(User::successfulSimulations).sum();
         OptionalDouble avgSuccessPerUser = users.stream()
                 .mapToInt(User::successfulSimulations)
                 .average();
-
-        double avgTotalSuccess = !users.isEmpty() ? (double) totalSuccessfulSimulations / users.size() : 0;
-
+        final var avgTotalSuccess = !users.isEmpty() ? (double) totalSuccessfulSimulations / users.size() : 0;
         return new SimulationStats(totalSimulations, totalSuccessfulSimulations, avgSuccessPerUser.orElse(0), avgTotalSuccess);
     }
 

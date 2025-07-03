@@ -6,7 +6,6 @@ import jumpingthings.main.user.service.UserService;
 import jumpingthings.main.views.*;
 
 import javax.swing.*;
-import java.util.Arrays;
 
 public class App {
     public static String authenticated;
@@ -24,14 +23,9 @@ public class App {
             // Delete User
             router.addView("/delete/user", new DeleteUserView(userService));
             // Game
-            router.addView("/game", new GameView());
+            router.addView("/game", new GameView(userService));
             // Statistics
-            final var statsList = Arrays.asList(
-                    new StatisticsView.UserStats("lucas", 10,8),
-                    new StatisticsView.UserStats("pedro", 10,8),
-                    new StatisticsView.UserStats("valeria", 10,8)
-            );
-            router.addView("/statistics", new StatisticsView(statsList));
+            router.addView("/statistics", new StatisticsView(userService));
             // Home
             router.addView("/", new HomeView());
             // Define a view inicial e mostra a janela

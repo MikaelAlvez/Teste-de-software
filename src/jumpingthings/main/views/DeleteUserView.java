@@ -64,7 +64,7 @@ public class DeleteUserView extends JPanel {
             if (isDeleted) {
                 JOptionPane.showMessageDialog(this, "Usuário deletado com sucesso.");
                 loginField.setText("");
-                RouterView.getInstance().navigateTo("/sign/in");
+                RouterView.getInstance().navigateTo("/");
             } else {
                 JOptionPane.showMessageDialog(this, "Usuário não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
