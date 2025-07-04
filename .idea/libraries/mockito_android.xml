@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="mockito.android" type="repository">
+    <properties maven-id="org.mockito:mockito-android:5.2.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-android/5.2.0/mockito-android-5.2.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-core/5.2.0/mockito-core-5.2.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/net/bytebuddy/byte-buddy/1.14.1/byte-buddy-1.14.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/net/bytebuddy/byte-buddy-agent/1.14.1/byte-buddy-agent-1.14.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/objenesis/objenesis/3.3/objenesis-3.3.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/net/bytebuddy/byte-buddy-android/1.14.1/byte-buddy-android-1.14.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/jakewharton/android/repackaged/dalvik-dx/1/dalvik-dx-1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/jakewharton/android/repackaged/libcore-dex/2/libcore-dex-2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
