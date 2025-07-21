@@ -35,6 +35,7 @@ public class GuardianHorizonTest {
         assertThat(guardian.getId()).isEqualTo(2);
     }
 
+
     // --- TESTES DE FRONTEIRA ---
 
     /** Testa ID logo acima do limite mínimo (2) */

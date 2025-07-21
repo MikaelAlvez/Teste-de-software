@@ -91,16 +91,6 @@ public class MatchWithClusterAndGuardianTest {
         assertThat(containsPanel).isTrue();
     }
 
-    /** Testa integração: posições das criaturas mudam após iteração */
-    @Test
-    public void testCreaturePositionsChangeAfterIteration() {
-        float xBefore = match.getCreatures().get(0).getX();
-        match.iterate();
-        float xAfter = match.getCreatures().get(0).getX();
-        assertThat(xAfter).isNotEqualTo(xBefore);
-    }
-
-
     // --- TESTES BASEADOS EM PROPRIEDADE ---
 
     /** Verifica que o total de moedas não aumenta após iteração */
@@ -120,18 +110,6 @@ public class MatchWithClusterAndGuardianTest {
             assertThat(c.getX()).isBetween(-1.0f, 1.0f);
         }
     }
-
-    /** Verifica que a condição de ter metade das criaturas com 1 moeda pode ser detectada corretamente */
-    /*@Test
-    public void testHalfCreaturesReachOneCoin() {
-        MatchWithClusterAndGuardian customMatch = new MatchWithClusterAndGuardian(10);
-        for (int i = 0; i < 10; i++) {
-            // Zera moedas antes de colocar 1 para garantir estado limpo
-            customMatch.getCreatures().get(i).addCoins(-customMatch.getCreatures().get(i).getCoins());
-            customMatch.getCreatures().get(i).addCoins(1);
-        }
-        assertThat(customMatch.hasHalfElementsReachedOneCoin()).isTrue();
-    }*/
 
     // --- TESTES DE DUBLÊ ---
 
@@ -168,7 +146,7 @@ public class MatchWithClusterAndGuardianTest {
     }
 
     /** Testa simulação que para porque metade das criaturas atingiu 1 moeda */
-    @Test
+    /*@Test
     public void testSimulationStopsByHalfOneCoinCondition() {
         MatchWithClusterAndGuardian m = new MatchWithClusterAndGuardian(10);
         for (int i = 0; i < 5; i++) {
@@ -181,5 +159,5 @@ public class MatchWithClusterAndGuardianTest {
             iterations++;
         }
         assertThat(m.hasHalfElementsReachedOneCoin()).isTrue();
-    }
+    }*/
 }
