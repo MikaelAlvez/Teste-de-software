@@ -27,5 +27,6 @@
     <orderEntry type="library" exported="" name="junit.jupiter.api" level="application" />
     <orderEntry type="library" exported="" name="io.kotest.assertions.json.jvm" level="application" />
     <orderEntry type="library" name="mockito.core" level="application" />
+    <orderEntry type="library" name="net.jqwik1" level="application" />
   </component>
 </module>
