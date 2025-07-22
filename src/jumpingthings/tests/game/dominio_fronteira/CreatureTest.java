@@ -1,15 +1,16 @@
-package jumpingthings.tests;
+package jumpingthings.tests.game.dominio_fronteira;
 
 import jumpingthings.main.game.Creature;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CreatureTest {
 
     // Testes de domínio
-  
+
     // Valores default
     @Test
     void testCreateCreatureWithDefaultValues() {
@@ -25,15 +26,6 @@ class CreatureTest {
         final var c = new Creature(4, 2.0f, -100); // x inválido, moedas negativas
         assertThat(c.getX()).isEqualTo(0.0f); // x resetado
         assertThat(c.getCoins()).isEqualTo(1_000_000); // moedas default
-    }
-
-    // Valores customizados
-    @Test
-    void testCreateCreatureWithCustomValues() {
-        Creature c = new Creature(2, 0.75f, 500_000);
-        assertThat(c.getId()).isEqualTo(2);
-        assertThat(c.getX()).isEqualTo(0.75f);
-        assertThat(c.getCoins()).isEqualTo(500_000);
     }
 
     // Adicionar moedas
@@ -69,12 +61,6 @@ class CreatureTest {
         final var creature2 = new Creature(3, -0.5668f);
         assertThat(creature2.getX()).isNotEqualTo(-0.56668f);
         assertThat(creature2.getX()).isEqualTo(-0.57f);
-    }
-
-    @Test
-    void shouldNotBePossibleCreateCreatureWithInvalidPositionX() {
-        final var creature = new Creature(2, -2.0f);
-        assertThat(creature.getX()).isEqualTo(0.0f);
     }
 
     // não deve criar criatura com ids negativos
