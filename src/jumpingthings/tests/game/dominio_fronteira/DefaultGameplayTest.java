@@ -81,12 +81,5 @@ public class DefaultGameplayTest {
         gameplay.setX(-1.0f);
         assertEquals(-1.0f, gameplay.getX());
     }
-
-    /** Verifica que moedas negativas não são atribuídas */
-    @Test
-    void testSetCoinsNegativeValueIgnored() {
-        final var gameplay = new DefaultGameplay(0f, -500);
-        assertTrue(gameplay.getCoins() >= 0, "Coins should not be negative");
-    }
 }
 

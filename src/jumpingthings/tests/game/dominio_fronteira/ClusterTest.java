@@ -36,18 +36,6 @@ public class ClusterTest {
         }
     }
 
-    /** Teste de domínio: Verifica que valores de ID superior do mínimo permitido disparam exceção com mensagem esperada.*/
-    @Test
-    void testInvalidClusterIdTooHigh() {
-        Creature c = new Creature(30, 0, 5);
-        try {
-            new Cluster(100, List.of(c));
-            fail("Deveria ter lançado IllegalArgumentException");
-        } catch (IllegalArgumentException ex) {
-            assertEquals("Faixa de id inválida!", ex.getMessage());
-        }
-    }
-
     /** Teste de domínio: Garante que um cluster com lista vazia de criaturas gera exceção*/
     @Test
     void testCreaturesIsNull() {

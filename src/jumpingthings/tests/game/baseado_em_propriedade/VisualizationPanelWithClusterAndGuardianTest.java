@@ -16,13 +16,6 @@ public class VisualizationPanelWithClusterAndGuardianTest {
     private VisualizationPanelWithClusterAndGuardian panel;
     private JFrame frame;
 
-    @BeforeEach
-    void setup() {
-        match = new MatchWithClusterAndGuardian(10); // Cria uma partida com 10 criaturas
-        panel = new VisualizationPanelWithClusterAndGuardian(match);
-        frame = new JFrame();
-    }
-
     /** Garante que todas as criaturas renderizadas possuem posições X normalizadas entre 0.0 e 1.0. */
     @Property
     void normalizedXIsAlwaysBetweenZeroAndOne(@ForAll @FloatRange(min = -1.0f, max = 1.0f) float x) {

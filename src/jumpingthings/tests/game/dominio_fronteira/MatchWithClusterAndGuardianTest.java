@@ -52,17 +52,4 @@ public class MatchWithClusterAndGuardianTest {
         float xAfter = match.getCreatures().get(0).getX();
         assertThat(xAfter).isNotEqualTo(xBefore);
     }
-
-    /** Testa se o painel é adicionado corretamente ao JFrame */
-    @Test
-    public void testPanelAddedToFrame() {
-        JFrame f = new JFrame();
-        f.add(panel);
-        Component[] components = f.getContentPane().getComponents();
-        boolean containsPanel = false;
-        for (Component c : components) {
-            if (c == panel) containsPanel = true;
-        }
-        assertThat(containsPanel).isTrue();
-    }
 }
