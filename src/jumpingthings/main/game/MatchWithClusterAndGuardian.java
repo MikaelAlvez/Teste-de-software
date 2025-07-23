@@ -64,10 +64,6 @@ public class MatchWithClusterAndGuardian {
         return closest;
     }
 
-    private float getMaxDistanceStealCoins() {
-        return this.maxDistanceStealCoins;
-    }
-
     private void resolveCreatureCollisions() {
         final var positionMap = new HashMap<Float, List<Creature>>();
         for (final var c : creatures) positionMap

@@ -1,6 +1,7 @@
 package jumpingthings.tests.game.dominio_fronteira;
 
 
+import jumpingthings.main.game.Cluster;
 import jumpingthings.main.game.MatchWithClusterAndGuardian;
 import jumpingthings.main.game.VisualizationPanelWithClusterAndGuardian;
 
@@ -51,5 +52,18 @@ public class MatchWithClusterAndGuardianTest {
         panel.repaint();
         float xAfter = match.getCreatures().get(0).getX();
         assertThat(xAfter).isNotEqualTo(xBefore);
+    }
+
+    /** Testa se o método reset reinicializa corretamente o estado da simulação */
+    @Test
+    public void testResetReiniciaEstadoCorretamente() {
+        // Simula alterações no estado antes do reset
+        match.iterate();
+
+        // Executa o reset
+        match.reset();
+
+        // Verifica que há exatamente 30 criaturas
+        assertThat(match.getCreatures()).hasSize(30);
     }
 }

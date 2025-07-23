@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.OptionalDouble;
 
-public class UserService implements UserServiceInterface {
+public class    UserService implements UserServiceInterface {
     private final UserDAOInterface userDAO;
 
     public UserService(final UserDAOInterface userDAO) {
