@@ -60,7 +60,9 @@ public class StatisticsView extends JPanel {
         // Cria o painel de rodapé com os botões
         JPanel footer = new JPanel();
         JButton backButton = new JButton("Voltar");
-        JButton reloadButton = new JButton("Recarregar"); // <-- NOVO BOTÃO
+        backButton.setName("StatisticsView.backButton");
+        JButton reloadButton = new JButton("Recarregar");
+        reloadButton.setName("StatisticsView.reloadButton");
 
         footer.add(backButton);
         footer.add(reloadButton);

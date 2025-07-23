@@ -64,6 +64,7 @@ public class AboutView extends JPanel {
         add(scroll, BorderLayout.CENTER);
 
         JButton backButton = new JButton("Voltar");
+        backButton.setName("AboutView.backButton");
         backButton.addActionListener(e -> RouterView.getInstance().navigateTo("/"));
         JPanel footer = new JPanel();
         footer.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));

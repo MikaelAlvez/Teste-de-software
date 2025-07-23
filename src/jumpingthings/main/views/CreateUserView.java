@@ -47,6 +47,7 @@ public class CreateUserView extends JPanel {
         add(loginLabel, gbc);
 
         loginField = new JTextField(20);
+        loginField.setName("CreateUserView.loginField");
         gbc.gridx = 1;
         add(loginField, gbc);
 
@@ -57,6 +58,7 @@ public class CreateUserView extends JPanel {
         add(passwordLabel, gbc);
 
         passwordField = new JPasswordField(20);
+        passwordField.setName("CreateUserView.passwordField");
         gbc.gridx = 1;
         add(passwordField, gbc);
 
@@ -68,6 +70,7 @@ public class CreateUserView extends JPanel {
 
         JPanel avatarPanel = new JPanel(new BorderLayout());
         JButton selectAvatarButton = new JButton("Selecionar Arquivo");
+        selectAvatarButton.setName("CreatUserView.selectAvatarButton");
         avatarLabel = new JLabel("Nenhum arquivo selecionado");
 
         selectAvatarButton.addActionListener(e -> {
@@ -87,7 +90,9 @@ public class CreateUserView extends JPanel {
         // Botões
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         JButton saveButton = new JButton("Salvar");
+        saveButton.setName("CreateUserView.saveButton");
         JButton backButton = new JButton("Voltar");
+        backButton.setName("CreateUserView.backButton");
 
         saveButton.addActionListener(e -> {
             final var login = loginField.getText().trim();
@@ -165,5 +170,9 @@ public class CreateUserView extends JPanel {
 
     public File getAvatarFile() {
         return selectedAvatar;
+    }
+
+    public void setSelectedAvatar(File selectedAvatar) {
+        this.selectedAvatar = selectedAvatar;
     }
 }

@@ -34,6 +34,7 @@ public class GameView extends JPanel {
         add(panel, BorderLayout.CENTER);
 
         JButton backButton = new JButton("Sair");
+        backButton.setName("GameView.backButton");
         backButton.addActionListener(e -> {
             removeSimulation();
             App.authenticated = null;
@@ -41,6 +42,7 @@ public class GameView extends JPanel {
         });
 
       JButton restartButton = new JButton("Restart");
+      restartButton.setName("GameView.restartButton");
       restartButton.addActionListener(e -> {
         removeSimulation();
         startSimulation();

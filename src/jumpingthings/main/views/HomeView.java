@@ -19,18 +19,23 @@ public class HomeView extends JPanel {
         Dimension smallButton = new Dimension(120, 30); // largura, altura
 
         JButton loginButton = new JButton("Login");
+        loginButton.setName("HomeView.loginButton");
         loginButton.setPreferredSize(smallButton);
 
         JButton createAccountButton = new JButton("Criar Conta");
+        createAccountButton.setName("HomeView.createAccountButton");
         createAccountButton.setPreferredSize(smallButton);
 
         JButton deleteAccountButton = new JButton("Excluir Conta");
+        deleteAccountButton.setName("HomeView.deleteAccountButton");
         deleteAccountButton.setPreferredSize(smallButton);
 
         JButton statisticsButton = new JButton("Ver Estatísticas");
+        statisticsButton.setName("HomeView.statsButton");
         statisticsButton.setPreferredSize(smallButton);
 
         JButton aboutButton = new JButton("Sobre");
+        aboutButton.setName("HomeView.aboutButton");
         aboutButton.setPreferredSize(smallButton);
 
         // Ações
