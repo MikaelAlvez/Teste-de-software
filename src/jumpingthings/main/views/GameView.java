@@ -5,7 +5,6 @@ import jumpingthings.main.App;
 import jumpingthings.main.game.MatchWithClusterAndGuardian;
 import jumpingthings.main.game.VisualizationPanelWithClusterAndGuardian;
 import jumpingthings.main.user.protocols.UserServiceInterface;
-import jumpingthings.main.user.service.UserService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,11 +37,18 @@ public class GameView extends JPanel {
         backButton.addActionListener(e -> {
             removeSimulation();
             App.authenticated = null;
-            System.exit(0);
+            RouterView.getInstance().navigateTo("/sign/in");
         });
+
+      JButton restartButton = new JButton("Restart");
+      restartButton.addActionListener(e -> {
+        removeSimulation();
+        startSimulation();
+      });
 
         JPanel footer = new JPanel();
         footer.add(backButton);
+        footer.add(restartButton);
         add(footer, BorderLayout.SOUTH);
 
         startSimulation();
