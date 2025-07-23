@@ -76,22 +76,25 @@ public class StatisticsView extends JPanel {
             };
         }
 
-        String[] fullColumns = new String[data[0].length];
-        fullColumns[0] = "Avatar";
-        System.arraycopy(columns, 0, fullColumns, 1, columns.length);
+        if (! usersStats.isEmpty()) {
+            String[] fullColumns = new String[data[0].length];
+            fullColumns[0] = "Avatar";
+            System.arraycopy(columns, 0, fullColumns, 1, columns.length);
 
-        // Cria a tabela com renderizador personalizado para imagens
-        JTable table = new JTable(new DefaultTableModel(data, fullColumns)) {
-            @Override
-            public Class<?> getColumnClass(int column) {
-                if (column == 0) return ImageIcon.class;
-                return Object.class;
-            }
-        };
+            // Cria a tabela com renderizador personalizado para imagens
+            JTable table = new JTable(new DefaultTableModel(data, fullColumns)) {
+                @Override
+                public Class<?> getColumnClass(int column) {
+                    if (column == 0) return ImageIcon.class;
+                    return Object.class;
+                }
+            };
 
-        table.setRowHeight(60);
-        JScrollPane scroll = new JScrollPane(table);
-        add(scroll, BorderLayout.CENTER);
+            table.setRowHeight(60);
+            JScrollPane scroll = new JScrollPane(table);
+            add(scroll, BorderLayout.CENTER);
+
+        }
 
         JButton backButton = new JButton("Voltar");
         backButton.addActionListener(e -> RouterView.getInstance().navigateTo("/"));
