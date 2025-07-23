@@ -20,7 +20,7 @@ public class VisualizationPanelWithClusterAndGuardian extends JPanel {
     }
 
     @Override
-    protected void paintComponent(final Graphics g) {
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
         int panelWidth = getWidth();
         int panelHeight = getHeight();
@@ -132,7 +132,7 @@ public class VisualizationPanelWithClusterAndGuardian extends JPanel {
     }
 
     // === Normaliza X de [-1, 1] para [0.0, 1.0] ===
-    private double normalizePositionX(final float positionX) {
+    public double normalizePositionX(final float positionX) {
         return (positionX + 1) / 2.0;
     }
 

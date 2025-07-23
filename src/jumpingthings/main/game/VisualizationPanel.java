@@ -100,7 +100,7 @@ public class VisualizationPanel extends JPanel {
      * @param positionX A posição X da criatura, em uma escala normalizada de -1 a 1.
      * @return A posição X normalizada entre 0.0 e 1.0, pronta para ser convertida em coordenadas de tela.
      */
-    private double normalizesCreaturePositionScreen(final float positionX) {
+    public double normalizesCreaturePositionScreen(final float positionX) {
         return (positionX + 1) / 2.0;
     }
 
@@ -122,7 +122,7 @@ public class VisualizationPanel extends JPanel {
      * @param coins A quantidade de moedas da criatura.
      * @return Uma string formatada com o número de moedas no estilo brasileiro, sem decimais.
      */
-    private String formatterCoins(final int coins) {
+    public String formatterCoins(final int coins) {
         NumberFormat brCurrency = NumberFormat.getNumberInstance(Locale.of("pt", "BR"));
         brCurrency.setMaximumFractionDigits(0);
         return brCurrency.format(coins);

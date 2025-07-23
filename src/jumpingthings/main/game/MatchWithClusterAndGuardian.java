@@ -140,6 +140,21 @@ public class MatchWithClusterAndGuardian {
         this.guardian.getGameplay().reset();
     }
 
+    public boolean hasHalfElementsReachedOneCoin() {
+        int total = creatures.size() + clusters.size();
+        if (total == 0) return false;
+
+        long count = creatures.stream()
+                .filter(c -> c.getCoins() == 1)
+                .count();
+
+        count += clusters.stream()
+                .filter(cl -> cl.getGameplay().getCoins() == 1)
+                .count();
+
+        return count >= Math.ceil(total / 2.0);
+    }
+
     public GuardianHorizon getGuardian() {
         return guardian;
     }
