@@ -40,13 +40,16 @@ public class DeleteUserView extends JPanel {
         add(new JLabel("Login:"), gbc);
 
         loginField = new JTextField(20);
+        loginField.setName("DeleteUserView.loginButton");
         gbc.gridx = 1;
         add(loginField, gbc);
 
         // Painel de botões
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         JButton deleteButton = new JButton("Deletar");
+        deleteButton.setName("DeleteUserView.deleteButton");
         JButton backButton = new JButton("Voltar");
+        backButton.setName("DeleteUserView.backButton");
 
         deleteButton.addActionListener(e -> {
             final var login = loginField.getText().trim();

@@ -43,6 +43,7 @@ public class SignInView extends JPanel {
         add(new JLabel("Login:"), gbc);
 
         loginField = new JTextField(20);
+        loginField.setName("SignInView.loginField");
         gbc.gridx = 1;
         add(loginField, gbc);
 
@@ -52,13 +53,16 @@ public class SignInView extends JPanel {
         add(new JLabel("Senha:"), gbc);
 
         passwordField = new JPasswordField(20);
+        passwordField.setName("SignInView.passwordField");
         gbc.gridx = 1;
         add(passwordField, gbc);
 
         // Botões
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         JButton loginButton = new JButton("Login");
+        loginButton.setName("SignInView.loginButton");
         JButton backButton = new JButton("Voltar");
+        backButton.setName("SignInView.backButton");
 
         loginButton.addActionListener(e -> {
             final var login = loginField.getText().trim();

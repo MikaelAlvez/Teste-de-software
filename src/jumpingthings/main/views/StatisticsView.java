@@ -94,6 +94,7 @@ public class StatisticsView extends JPanel {
         add(scroll, BorderLayout.CENTER);
 
         JButton backButton = new JButton("Voltar");
+        backButton.setName("StatisticsView.backButton");
         backButton.addActionListener(e -> RouterView.getInstance().navigateTo("/"));
         JPanel footer = new JPanel();
         footer.add(backButton);

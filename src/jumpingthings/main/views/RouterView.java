@@ -67,4 +67,16 @@ public class RouterView extends JFrame {
             System.err.println("View '" + name + "' não existe.");
         }
     }
+
+    public CardLayout getCardLayout() {
+        return cardLayout;
+    }
+
+    public JPanel getCardPanel() {
+        return cardPanel;
+    }
+
+    public Map<String, JPanel> getViews() {
+        return views;
+    }
 }

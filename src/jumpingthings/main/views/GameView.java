@@ -35,10 +35,11 @@ public class GameView extends JPanel {
         add(panel, BorderLayout.CENTER);
 
         JButton backButton = new JButton("Sair");
+        backButton.setName("GameView.backButton");
         backButton.addActionListener(e -> {
             removeSimulation();
             App.authenticated = null;
-            System.exit(0);
+            RouterView.getInstance().navigateTo("/");
         });
 
         JPanel footer = new JPanel();
