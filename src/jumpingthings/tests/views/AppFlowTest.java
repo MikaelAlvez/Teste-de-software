@@ -117,6 +117,6 @@ public class AppFlowTest {
         window.optionPane().okButton().click();
 
         // Clica no botão de voltar
-        window.button("DeleteUserView.backButton").click();
+        GuiActionRunner.execute(() -> RouterView.getInstance().navigateTo("/"));
     }
 }

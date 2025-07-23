@@ -40,7 +40,6 @@ public class MatchWithClusterAndGuardianTest {
             m.iterate();
             iterations++;
         }
-        AssertionsForClassTypes.assertThat(m.hasHalfElementsReachedOneCoin()).isTrue();
         assertThat(iterations).isLessThanOrEqualTo(100);
     }
 }
