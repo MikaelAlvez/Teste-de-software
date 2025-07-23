@@ -26,5 +26,8 @@
     <orderEntry type="library" name="assertj.core" level="application" />
     <orderEntry type="library" name="junit.jupiter.api" level="application" />
     <orderEntry type="library" name="xerial.sqlite.jdbc" level="application" />
+    <orderEntry type="library" name="mockito.core" level="application" />
+    <orderEntry type="library" name="assertj.swing" level="application" />
+    <orderEntry type="library" name="assertj.swing.junit1" level="application" />
   </component>
 </module>
