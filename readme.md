@@ -31,6 +31,15 @@ A simulação consiste em:
 - Entrega do projeto em formato `.zip`, com o padrão de nome:  
   `Nome1Nome2-Avaliacao1-TS.zip`
 
+## Pacotes
+- xerial.sqlite.jdbc2
+- net.jqwik
+- mockito-core
+- junit-jupiter-api
+- assertj-core
+- assertj-swing
+- assertj-swing-junit
+
 ## 🧪 Testes e Cobertura
 
 O projeto inclui uma **suíte de testes unitários em Java**, baseada em JUnit, com foco em:
