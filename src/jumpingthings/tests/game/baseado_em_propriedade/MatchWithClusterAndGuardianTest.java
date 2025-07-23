@@ -1,14 +1,19 @@
 package jumpingthings.tests.game.baseado_em_propriedade;
 
+import jumpingthings.main.game.Creature;
 import jumpingthings.main.game.MatchWithClusterAndGuardian;
 import jumpingthings.main.game.VisualizationPanelWithClusterAndGuardian;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
+import net.jqwik.api.*;
+import net.jqwik.api.constraints.IntRange;
+import net.jqwik.api.constraints.Positive;
 
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MatchWithClusterAndGuardianTest {
 
@@ -24,20 +29,24 @@ public class MatchWithClusterAndGuardianTest {
     }
 
     /** Verifica que o total de moedas não aumenta após iteração */
-    @Test
-    public void testTotalCoinsNotIncreasing() {
-        int totalAntes = match.getCreatures().stream().mapToInt(c -> c.getCoins()).sum();
+    /** Propriedade: O total de moedas não aumenta após qualquer iteração */
+    @Property
+    void totalCoinsShouldNotIncrease(@ForAll @IntRange(min = 2, max = 100) int creatureCount) {
+        MatchWithClusterAndGuardian match = new MatchWithClusterAndGuardian(creatureCount);
+        int totalAntes = match.getCreatures().stream().mapToInt(Creature::getCoins).sum();
         match.iterate();
-        int totalDepois = match.getCreatures().stream().mapToInt(c -> c.getCoins()).sum();
+        int totalDepois = match.getCreatures().stream().mapToInt(Creature::getCoins).sum();
         assertThat(totalDepois).isLessThanOrEqualTo(totalAntes);
     }
 
-    /** Garante que posições X das criaturas estão dentro do intervalo esperado após iteração */
-    @Test
-    public void testPositionsWithinBounds() {
+    /** Propriedade: Todas as posições X devem permanecer dentro dos limites após iteração */
+    @Property
+    void allCreaturePositionsWithinExpectedBounds(@ForAll @IntRange(min = 2, max = 100) int creatureCount) {
+        MatchWithClusterAndGuardian match = new MatchWithClusterAndGuardian(creatureCount);
         match.iterate();
-        for (var c : match.getCreatures()) {
-            assertThat(c.getX()).isBetween(-1.0f, 1.0f);
+        List<Creature> creatures = match.getCreatures();
+        for (Creature c : creatures) {
+            assertThat(c.getX()).isBetween(-1.0F, 1.0F); // após 1 iteração
         }
     }
 }
