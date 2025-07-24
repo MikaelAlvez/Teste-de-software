@@ -31,5 +31,7 @@
     <orderEntry type="library" name="assertj.swing" level="application" />
     <orderEntry type="library" name="assertj.swing.junit" level="application" />
     <orderEntry type="library" name="junit.jupiter.engine" level="application" />
+    <orderEntry type="library" name="hsqldb" level="application" />
+    <orderEntry type="library" name="io.kotest.assertions.json.jvm" level="application" />
   </component>
 </module>

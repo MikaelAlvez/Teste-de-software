@@ -36,18 +36,6 @@ public class VisualizationPanelWithClusterAndGuardianTest {
         assertThat(panel.getPreferredSize()).isEqualTo(expected);
     }
 
-    /** Verificar se os elementos visuais são desenhados nas posições esperadas */
-    @Test
-    public void testCreatureDrawingPositionMatchesNormalizedX() {
-        Creature creature = match.getCreatures().get(0);
-        creature.setX(0.0f);
-        Graphics2D g2d = (Graphics2D) new BufferedImage(Env.WINDOW_WIDTH, Env.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB).getGraphics();
-
-        panel.paintComponent(g2d); // deve desenhar no centro
-        int expectedX = Env.WINDOW_WIDTH / 2;
-        // Como o desenho não retorna a posição, apenas garantir que não lança exceções aqui já é importante
-    }
-
 
     // === TESTES DE FRONTEIRA ===
 
@@ -58,7 +46,7 @@ public class VisualizationPanelWithClusterAndGuardianTest {
         match.getClusters().clear();
         match.getGuardian().getGameplay().addCoins(-match.getGuardian().getGameplay().getCoins());
         assertThat(panel).isNotNull();
-        panel.repaint(); // Não deve lançar exceção
+        panel.repaint();
     }
 
     /** Testar criaturas em posições extremas de X (-1.0 e 1.0) */

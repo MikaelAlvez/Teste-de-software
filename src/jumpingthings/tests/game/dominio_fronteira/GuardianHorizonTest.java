@@ -39,7 +39,7 @@ public class GuardianHorizonTest {
 
         Creature c1 = new Creature(1, 50, 10);
         Creature c2 = new Creature(2, 70, 20);
-        Cluster cluster = new Cluster(50, List.of(c1, c2)); // Total coins = 30
+        Cluster cluster = new Cluster(50, List.of(c1, c2));
 
         guardian.addCluster(cluster);
 

@@ -23,9 +23,9 @@ class CreatureTest {
     // Não deve criar uma criatura com os 3 parametros inválidos
     @Test
     void shouldNotCreateCreatureWithInvalidXAndNegativeCoins() {
-        final var c = new Creature(4, 2.0f, -100); // x inválido, moedas negativas
-        assertThat(c.getX()).isEqualTo(0.0f); // x resetado
-        assertThat(c.getCoins()).isEqualTo(1_000_000); // moedas default
+        final var c = new Creature(4, 2.0f, -100);
+        assertThat(c.getX()).isEqualTo(0.0f);
+        assertThat(c.getCoins()).isEqualTo(1_000_000);
     }
 
     // Adicionar moedas
@@ -67,7 +67,7 @@ class CreatureTest {
     @Test
     void shouldNotBePossibleCreateCreaturesWithNegativesIds() {
         final var exception = assertThrows(RuntimeException.class, () -> {
-            new Creature(-1); // valor inválido (n <= 1)
+            new Creature(-1);
         });
         assertEquals("Id inválido.", exception.getMessage());
     }

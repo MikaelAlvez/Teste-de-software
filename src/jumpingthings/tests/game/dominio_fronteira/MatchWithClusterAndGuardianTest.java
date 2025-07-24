@@ -57,13 +57,8 @@ public class MatchWithClusterAndGuardianTest {
     /** Testa se o método reset reinicializa corretamente o estado da simulação */
     @Test
     public void testResetReiniciaEstadoCorretamente() {
-        // Simula alterações no estado antes do reset
         match.iterate();
-
-        // Executa o reset
         match.reset();
-
-        // Verifica que há exatamente 30 criaturas
         assertThat(match.getCreatures()).hasSize(30);
     }
 }

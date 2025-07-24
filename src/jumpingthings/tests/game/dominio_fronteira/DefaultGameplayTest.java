@@ -64,10 +64,10 @@ public class DefaultGameplayTest {
      @Test
     void testSetXOutOfBoundsDoesNotChangeX() {
         final var gameplay = new DefaultGameplay(0.5f, 100);
-        gameplay.setX(1.01f); // > 1.0 → ignorado
+        gameplay.setX(1.01f);
         assertEquals(0.5f, gameplay.getX());
 
-        gameplay.setX(-1.05f); // < -1.0 → ignorado
+        gameplay.setX(-1.05f);
         assertEquals(0.5f, gameplay.getX());
     }
 

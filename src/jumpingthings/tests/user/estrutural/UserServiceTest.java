@@ -25,7 +25,7 @@ public class UserServiceTest {
         service = new UserService(mockDAO);
     }
 
-    //Teste Estrutural: Verifica todos os caminhos em getSimulationStatistics
+    //Teste Estrutural: Verifica os caminhos em getSimulationStatistics
     @Test
     void testGetSimulationStatistics_allPaths() throws SQLException {
         List<User> users = Arrays.asList(

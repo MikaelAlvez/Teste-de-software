@@ -46,7 +46,7 @@ public class AppTeste {
         m.iterate();
         p.repaint();
         float xAfter = m.getCreatures().get(0).getX();
-        assertThat(xBefore).isNotEqualTo(xAfter); // mudança indica que houve atualização
+        assertThat(xBefore).isNotEqualTo(xAfter);
     }
 }
 

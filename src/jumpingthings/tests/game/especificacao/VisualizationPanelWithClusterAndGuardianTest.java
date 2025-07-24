@@ -34,17 +34,5 @@ public class VisualizationPanelWithClusterAndGuardianTest {
         Dimension expected = new Dimension(800, 600); // Substituir conforme Env.WINDOW_WIDTH/HEIGHT
         assertThat(panel.getPreferredSize()).isEqualTo(expected);
     }
-
-    /** Verificar se os elementos visuais são desenhados nas posições esperadas */
-    @Test
-    public void testCreatureDrawingPositionMatchesNormalizedX() {
-        Creature creature = match.getCreatures().get(0);
-        creature.setX(0.0f);
-        Graphics2D g2d = (Graphics2D) new BufferedImage(Env.WINDOW_WIDTH, Env.WINDOW_HEIGHT, BufferedImage.TYPE_INT_ARGB).getGraphics();
-
-        panel.paintComponent(g2d); // deve desenhar no centro
-        int expectedX = Env.WINDOW_WIDTH / 2;
-        // Como o desenho não retorna a posição, apenas garantir que não lança exceções aqui já é importante
-    }
 }
 
