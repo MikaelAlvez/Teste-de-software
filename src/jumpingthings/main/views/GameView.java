@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class GameView extends JPanel {
     private static final int TIMER_MS = 1000;
-    private static final int MAXIMUM_MATCH_DURATION = 100;
+    private static final int MAXIMUM_MATCH_DURATION = 40;
 
     private MatchWithClusterAndGuardian match;
     private VisualizationPanelWithClusterAndGuardian panel;

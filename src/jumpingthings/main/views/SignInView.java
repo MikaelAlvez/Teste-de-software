@@ -73,7 +73,10 @@ public class SignInView extends JPanel {
                 if (Objects.equals(userAlreadyExists.password(), password)) {
                     App.authenticated = userAlreadyExists.login();
                     RouterView.getInstance().navigateTo("/game");
-                } else RouterView.getInstance().navigateTo("/");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Credenciais erradas!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    RouterView.getInstance().navigateTo("/");
+                };
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
